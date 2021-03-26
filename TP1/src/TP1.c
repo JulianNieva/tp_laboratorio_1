@@ -14,13 +14,15 @@
 int main(void)
 {
 	int opcionIngresada;
+	int banderaPrimerOperando = 1;
+	int banderaSegundoOperando = 1;
 	float x = 0;
 	float y = 0;
 
 	setbuf(stdout, NULL);
 	do
 	{
-		if(x == 0)
+		if(banderaPrimerOperando == 1)
 		{
 			printf("1. Ingresar primer operando (A) \n");
 		}
@@ -28,7 +30,7 @@ int main(void)
 		{
 			printf("Primer operando (A) = %.2f \n",x);
 		}
-		if(y == 0)
+		if(banderaSegundoOperando == 1)
 		{
 			printf("2. Ingresar el segundo operando (B) \n");
 		}
@@ -48,10 +50,12 @@ int main(void)
 			case 1:
 				printf("Ingrese el primer operando (A): ");
 				scanf("%f", &x);
+				banderaPrimerOperando = 0;
 				break;
 			case 2:
 				printf("Ingrese el segundo operando (B): ");
 				scanf("%f", &y);
+				banderaSegundoOperando = 0;
 				break;
 			case 3:
 				printf("No se llego todavia\n");
