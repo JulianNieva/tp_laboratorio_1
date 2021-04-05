@@ -10,19 +10,24 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "OperacionesMatematicas.h"
+
 
 int main(void)
 {
 	int opcionIngresada;
-	int banderaPrimerOperando = 1;
-	int banderaSegundoOperando = 1;
-	float x = 0;
-	float y = 0;
+	int banderaPrimerOperando;
+	int banderaSegundoOperando;
+	float x;
+	float y;
+
+	banderaPrimerOperando = 0;
+	banderaSegundoOperando = 0;
 
 	setbuf(stdout, NULL);
 	do
 	{
-		if(banderaPrimerOperando == 1)
+		if(banderaPrimerOperando == 0)
 		{
 			printf("1. Ingresar primer operando (A) \n");
 		}
@@ -30,7 +35,7 @@ int main(void)
 		{
 			printf("Primer operando (A) = %.2f \n",x);
 		}
-		if(banderaSegundoOperando == 1)
+		if(banderaSegundoOperando == 0)
 		{
 			printf("2. Ingresar el segundo operando (B) \n");
 		}
@@ -50,15 +55,35 @@ int main(void)
 			case 1:
 				printf("Ingrese el primer operando (A): ");
 				scanf("%f", &x);
-				banderaPrimerOperando = 0;
+				banderaPrimerOperando = 1;
 				break;
 			case 2:
 				printf("Ingrese el segundo operando (B): ");
 				scanf("%f", &y);
-				banderaSegundoOperando = 0;
+				banderaSegundoOperando = 1;
 				break;
 			case 3:
-				printf("No se llego todavia\n");
+				if(banderaSegundoOperando == 1 || banderaPrimerOperando == 1)
+				{
+					printf("1. Calcular la suma \n");
+					printf("2. Calcular la resta \n");
+					printf("3. Calcular la division \n");
+					printf("4. Calcular la multiplicacion \n");
+					printf("5. Calcular el factorial \n");
+					printf("6. Para regresar \n");
+					printf("Ingrese la operacion deseada a realizar : ");
+					scanf("%d", &opcionIngresada);
+
+					switch(opcionIngresada)
+					{
+					case 6:
+						break;
+					}
+				}
+				else
+				{
+					printf("No ingreso ningun operando\n");
+				}
 				break;
 			case 4:
 				printf("Idem 3\n");
