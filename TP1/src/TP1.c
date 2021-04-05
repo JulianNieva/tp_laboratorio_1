@@ -21,6 +21,16 @@ int main(void)
 	float x;
 	float y;
 
+	float resultadoSuma;
+	float resultadoResta;
+	float resultadoDivision;
+	float resultadoMultiplicacion;
+	float resultadoFactorialDeX;
+	float resultadoFactorialDeY;
+
+	x = 0;
+	y = 0;
+
 	banderaPrimerOperando = 0;
 	banderaSegundoOperando = 0;
 
@@ -44,6 +54,11 @@ int main(void)
 			printf("Segundo operando (B) = %.2f \n",y);
 		}
 
+		if(banderaSegundoOperando == 1 && banderaPrimerOperando == 1)
+		{
+			printf("Si desea cambiar algunos de los valores, Ingrese 1 o 2 correspondientes a los operando \n");
+		}
+
 		printf("3. Calcular todas las operaciones \n");
 		printf("4. Informar resultados \n");
 		printf("5. Salir \n");
@@ -63,30 +78,28 @@ int main(void)
 				banderaSegundoOperando = 1;
 				break;
 			case 3:
-				if(banderaSegundoOperando == 1 || banderaPrimerOperando == 1)
+				if(banderaSegundoOperando == 1 || banderaPrimerOperando == 1)	//Se cumple la condicion si se ingreso aunque sea un operando
 				{
-					printf("1. Calcular la suma \n");
-					printf("2. Calcular la resta \n");
-					printf("3. Calcular la division \n");
-					printf("4. Calcular la multiplicacion \n");
-					printf("5. Calcular el factorial \n");
-					printf("6. Para regresar \n");
-					printf("Ingrese la operacion deseada a realizar : ");
-					scanf("%d", &opcionIngresada);
-
-					switch(opcionIngresada)
-					{
-					case 6:
-						break;
-					}
+					resultadoSuma = CalcularSuma(x,y);
+					resultadoResta = CalcularResta(x,y);
+					resultadoDivision = CalcularDivision(x,y);
+					resultadoMultiplicacion = CalcularMultiplicacion(x,y);
+					resultadoFactorialDeX = CalcularFactorialX(x);
+					resultadoFactorialDeY = CalcularFactorialY(y);
+					printf("Se realizo todas las operaciones con exito! \n");
 				}
-				else
+				else	//Si no se ingreso aunque sea un operando, se muestra este mensaje
 				{
-					printf("No ingreso ningun operando\n");
+					printf("No se ingreso ningun operando\n");
 				}
 				break;
 			case 4:
-				printf("Idem 3\n");
+				printf("El resultado de %.2f + %2.f es: %.2f \n", x, y, resultadoSuma);
+				printf("El resultado de %.2f - %2.f es: %.2f \n", x, y, resultadoResta);
+				printf("El resultado de %.2f / %2.f es: %.2f \n", x, y, resultadoDivision);
+				printf("El resultado de %.2f * %2.f es: %.2f \n", x, y, resultadoMultiplicacion);
+				printf("El factorial de %.2f es: %.2f  Y el factorial de %.2f es: %.2f \n", x ,resultadoFactorialDeX, y , resultadoFactorialDeY);
+				//programar volver al menu
 				break;
 		}
 	}while(opcionIngresada != 5);
