@@ -11,50 +11,53 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "OperacionesMatematicas.h"
+#include "PedirEnteros.h"
 
+#define SE_INGRESO 1
+#define NO_SE_INGRESO 0
 
 int main(void)
 {
 	int opcionIngresada;
 	int banderaPrimerOperando;
 	int banderaSegundoOperando;
-	float x;
-	float y;
+	int x;
+	int y;
 
-	float resultadoSuma;
-	float resultadoResta;
+	int resultadoSuma;
+	int resultadoResta;
 	float resultadoDivision;
-	float resultadoMultiplicacion;
+	int resultadoMultiplicacion;
 	float resultadoFactorialDeX;
 	float resultadoFactorialDeY;
 
 	x = 0;
 	y = 0;
 
-	banderaPrimerOperando = 0;
-	banderaSegundoOperando = 0;
+	banderaPrimerOperando = NO_SE_INGRESO;
+	banderaSegundoOperando = NO_SE_INGRESO;
 
 	setbuf(stdout, NULL);
+
 	do
 	{
-		if(banderaPrimerOperando == 0)
+		if(banderaPrimerOperando == NO_SE_INGRESO)
 		{
 			printf("1. Ingresar primer operando (A) \n");
 		}
 		else
 		{
-			printf("Primer operando (A) = %.2f \n",x);
+			printf("Primer operando (A) = %d \n",x);
 		}
-		if(banderaSegundoOperando == 0)
+		if(banderaSegundoOperando == NO_SE_INGRESO)
 		{
 			printf("2. Ingresar el segundo operando (B) \n");
 		}
 		else
 		{
-			printf("Segundo operando (B) = %.2f \n",y);
+			printf("Segundo operando (B) = %d \n",y);
 		}
-
-		if(banderaSegundoOperando == 1 && banderaPrimerOperando == 1)
+		if(banderaSegundoOperando == SE_INGRESO && banderaPrimerOperando == SE_INGRESO)
 		{
 			printf("Si desea cambiar algunos de los valores, Ingrese 1 o 2 correspondientes a los operando \n");
 		}
@@ -68,17 +71,15 @@ int main(void)
 		switch(opcionIngresada)
 		{
 			case 1:
-				printf("Ingrese el primer operando (A): ");
-				scanf("%f", &x);
-				banderaPrimerOperando = 1;
+				x = PedirPrimerOperando();
+				banderaPrimerOperando = SE_INGRESO;
 				break;
 			case 2:
-				printf("Ingrese el segundo operando (B): ");
-				scanf("%f", &y);
-				banderaSegundoOperando = 1;
+				y = PedirSegundoOperando();
+				banderaSegundoOperando = SE_INGRESO;
 				break;
 			case 3:
-				if(banderaSegundoOperando == 1 || banderaPrimerOperando == 1)	//Se cumple la condicion si se ingreso aunque sea un operando
+				if(banderaSegundoOperando == SE_INGRESO || banderaPrimerOperando == SE_INGRESO)	//Se cumple la condicion si se ingreso aunque sea un operando
 				{
 					resultadoSuma = CalcularSuma(x,y);
 					resultadoResta = CalcularResta(x,y);
@@ -94,13 +95,15 @@ int main(void)
 				}
 				break;
 			case 4:
-				printf("El resultado de %.2f + %2.f es: %.2f \n", x, y, resultadoSuma);
-				printf("El resultado de %.2f - %2.f es: %.2f \n", x, y, resultadoResta);
-				printf("El resultado de %.2f / %2.f es: %.2f \n", x, y, resultadoDivision);
-				printf("El resultado de %.2f * %2.f es: %.2f \n", x, y, resultadoMultiplicacion);
-				printf("El factorial de %.2f es: %.2f  Y el factorial de %.2f es: %.2f \n", x ,resultadoFactorialDeX, y , resultadoFactorialDeY);
+				printf("El resultado de %d + %d es: %d \n", x, y, resultadoSuma);
+				printf("El resultado de %d - %d es: %d \n", x, y, resultadoResta);
+				printf("El resultado de %d / %d es: %.2f \n", x, y, resultadoDivision);
+				printf("El resultado de %d * %d es: %d \n", x, y, resultadoMultiplicacion);
+				printf("El factorial de %d es: %.2f  Y el factorial de %d es: %.2f \n", x ,resultadoFactorialDeX, y , resultadoFactorialDeY);
 				//programar volver al menu
 				break;
-		}
-	}while(opcionIngresada != 5);
-}
+
+		}//Fin del switch
+
+	}while(opcionIngresada != 5);	//Fin del do-while
+}//Fin de la funcion

@@ -10,16 +10,62 @@
 #ifndef OPERACIONESMATEMATICAS_H_
 #define OPERACIONESMATEMATICAS_H_
 
-float CalcularSuma (float, float);
+/**
+ * @fn int CalcularSuma(int, int)
+ * @brief Realiza la suma entre x e y
+ *
+ * @param Recibe el primer operando (x)
+ * @param Recibe el segundo operando (y)
+ * @return Devuelve el resultado de la suma
+ */
+int CalcularSuma (int, int);
 
-float CalcularResta (float, float);
+/**
+ * @fn int CalcularResta(int, int)
+ * @brief Realiza la resta entre x e y
+ *
+ * @param Recibe el primer operando (x)
+ * @param Recibe el segundo operando (y)
+ * @return Devuelve el resultado de la resta
+ */
+int CalcularResta (int, int);
 
-float CalcularDivision (float, float);
+/**
+ * @fn float CalcularDivision(int, int)
+ * @brief Realiza la division entre x e y
+ *
+ * @param Recibe el primer operando (x)
+ * @param Recibe el segundo operando (y)
+ * @return Devuelve el resultado de la division
+ */
+float CalcularDivision (int, int);
 
-float CalcularMultiplicacion (float, float);
+/**
+ * @fn int CalcularMultiplicacion(int, int)
+ * @brief Realiza la multiplicacion entre x e y
+ *
+ * @param Recibe el primer operando (x)
+ * @param Recibe el segundo operando (y)
+ * @return Devuelve el resultado de la multiplicacion
+ */
+int CalcularMultiplicacion (int, int);
 
-float CalcularFactorialX (float);
+/**
+ * @fn float CalcularFactorialX(int)
+ * @brief Se calcula el factorial del primer operando (x)
+ *
+ * @param Recibe el primer operando (x)
+ * @return Devuelve el resultado del factorial x de tipo flotante
+ */
+float CalcularFactorialX (int);
 
-float CalcularFactorialY (float);
+/**
+ * @fn float CalcularFactorialX(int)
+ * @brief Se calcula el factorial del segundo operando (y)
+ *
+ * @param Recibe el segundo operando (y)
+ * @return Devuelve el resultado del factorial y de tipo flotante
+ */
+float CalcularFactorialY (int);
 
 #endif /* OPERACIONESMATEMATICAS_H_ */
