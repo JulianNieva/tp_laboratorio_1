@@ -7,22 +7,22 @@
 
 #include "PedirEnteros.h"
 
-int PedirPrimerOperando(void)
+float PedirPrimerOperando(void)
 {
-	int x;
+	float x;
 
 	printf("Ingrese el primer operando (A): ");
-	scanf("%d", & x);
+	scanf("%f", & x);
 
 	return x;
 }
 
-int PedirSegundoOperando(void)
+float PedirSegundoOperando(void)
 {
-	int y;
+	float y;
 
 	printf("Ingrese el segundo operando (B): ");
-	scanf("%d", & y);
+	scanf("%f", & y);
 
 	return y;
 }

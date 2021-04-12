@@ -11,61 +11,61 @@
 #define OPERACIONESMATEMATICAS_H_
 
 /**
- * @fn int CalcularSuma(int, int)
+ * @fn float CalcularSuma(float, float)
  * @brief Realiza la suma entre x e y
  *
  * @param Recibe el primer operando (x)
  * @param Recibe el segundo operando (y)
  * @return Devuelve el resultado de la suma
  */
-int CalcularSuma (int, int);
+float CalcularSuma (float, float);
 
 /**
- * @fn int CalcularResta(int, int)
+ * @fn float CalcularResta(float, float)
  * @brief Realiza la resta entre x e y
  *
  * @param Recibe el primer operando (x)
  * @param Recibe el segundo operando (y)
  * @return Devuelve el resultado de la resta
  */
-int CalcularResta (int, int);
+float CalcularResta (float, float);
 
 /**
- * @fn float CalcularDivision(int, int)
+ * @fn float CalcularDivision(float, float)
  * @brief Realiza la division entre x e y
  *
  * @param Recibe el primer operando (x)
  * @param Recibe el segundo operando (y)
  * @return Devuelve el resultado de la division
  */
-float CalcularDivision (int, int);
+float CalcularDivision (float, float);
 
 /**
- * @fn int CalcularMultiplicacion(int, int)
+ * @fn float CalcularMultiplicacion(float, float)
  * @brief Realiza la multiplicacion entre x e y
  *
  * @param Recibe el primer operando (x)
  * @param Recibe el segundo operando (y)
  * @return Devuelve el resultado de la multiplicacion
  */
-int CalcularMultiplicacion (int, int);
+float CalcularMultiplicacion (float, float);
 
 /**
- * @fn float CalcularFactorialX(int)
+ * @fn float CalcularFactorialX(float)
  * @brief Se calcula el factorial del primer operando (x)
  *
  * @param Recibe el primer operando (x)
  * @return Devuelve el resultado del factorial x de tipo flotante
  */
-float CalcularFactorialX (int);
+float CalcularFactorialX (float);
 
 /**
- * @fn float CalcularFactorialX(int)
+ * @fn float CalcularFactorialX(float)
  * @brief Se calcula el factorial del segundo operando (y)
  *
  * @param Recibe el segundo operando (y)
  * @return Devuelve el resultado del factorial y de tipo flotante
  */
-float CalcularFactorialY (int);
+float CalcularFactorialY (float);
 
 #endif /* OPERACIONESMATEMATICAS_H_ */

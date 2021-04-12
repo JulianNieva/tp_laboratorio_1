@@ -12,19 +12,19 @@
 #define PEDIRENTEROS_H_
 
 /**
- * @fn int PedirPrimerOperando(void)
+ * @fn float PedirPrimerOperando(void)
  * @brief Solicita al usuario que ingrese el primer operando
  *
- * @return Devuelve el numero entero que ingreso el usuario
+ * @return Devuelve el numero decimal que ingreso el usuario
  */
-int PedirPrimerOperando(void);
+float PedirPrimerOperando(void);
 
 /**
- * @fn int PedirSegundoOperando(void)
+ * @fn float PedirSegundoOperando(void)
  * @brief Solicita al usuario que ingrese el segundo operando
  *
- * @return Devuelve el numero entero que ingreso el usuario
+ * @return Devuelve el numero decimal que ingreso el usuario
  */
-int PedirSegundoOperando(void);
+float PedirSegundoOperando(void);
 
 #endif /* PEDIRENTEROS_H_ */

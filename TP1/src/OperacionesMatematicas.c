@@ -7,9 +7,9 @@
 
 #include "OperacionesMatematicas.h"
 
-int CalcularSuma (int primerNumero, int segundoNumero)
+float CalcularSuma (float primerNumero, float segundoNumero)
 {
-	int resultado;
+	float resultado;
 
 	resultado = primerNumero + segundoNumero;
 
@@ -17,9 +17,9 @@ int CalcularSuma (int primerNumero, int segundoNumero)
 
 }
 
-int CalcularResta (int primerNumero, int segundoNumero)
+float CalcularResta (float primerNumero, float segundoNumero)
 {
-	int resultado;
+	float resultado;
 
 	resultado = primerNumero - segundoNumero;
 
@@ -27,7 +27,7 @@ int CalcularResta (int primerNumero, int segundoNumero)
 	return resultado;
 }
 
-float CalcularDivision (int primerNumero, int segundoNumero)
+float CalcularDivision (float primerNumero, float segundoNumero)
 {
 	float resultado;
 
@@ -36,19 +36,19 @@ float CalcularDivision (int primerNumero, int segundoNumero)
 	return resultado;
 }
 
-int CalcularMultiplicacion (int primerNumero, int segundoNumero)
+float CalcularMultiplicacion (float primerNumero, float segundoNumero)
 {
-	int resultado;
+	float resultado;
 
 	resultado = primerNumero * segundoNumero;
 
 	return resultado;
 }
 
-float CalcularFactorialX (int primerNumero)
+float CalcularFactorialX (float primerNumero)
 {
-	int i;
-	int factorial;
+	float i;
+	float factorial;
 
 	factorial = 1;
 
@@ -60,10 +60,10 @@ float CalcularFactorialX (int primerNumero)
 	return factorial;
 }
 
-float CalcularFactorialY (int segundoNumero)
+float CalcularFactorialY (float segundoNumero)
 {
-	int i;
-	int factorial;
+	float i;
+	float factorial;
 
 	factorial = 1;
 
