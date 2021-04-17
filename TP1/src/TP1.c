@@ -46,6 +46,8 @@ int main(void)
 		do
 		{
 			system("@cls||clear");
+			printf("Estudiante: Julian Leandro Nieva \t Curso: 1°C\n");
+
 			if(banderaPrimerOperando == NO_SE_INGRESO)	//Si no se ingreso el primer operando se muestra el mensaje correspondiente
 			{
 				printf("1. Ingresar primer operando A \n");
