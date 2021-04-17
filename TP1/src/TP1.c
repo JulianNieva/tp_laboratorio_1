@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "OperacionesMatematicas.h"
-#include "PedirEnteros.h"
+#include "PedirNumeros.h"
 
 #define SE_INGRESO 1
 #define NO_SE_INGRESO 0
@@ -46,7 +46,7 @@ int main(void)
 		do
 		{
 			system("@cls||clear");
-			printf("Estudiante: Julian Leandro Nieva \t Curso: 1°C\n");
+			printf("Estudiante: Julian Leandro Nieva \t Curso: 1 C\n");
 
 			if(banderaPrimerOperando == NO_SE_INGRESO)	//Si no se ingreso el primer operando se muestra el mensaje correspondiente
 			{
@@ -111,8 +111,8 @@ int main(void)
 							banderaDivision = SE_REALIZO;
 						}
 
-						resultadoFactorialDeX = CalcularFactorial((int)x);
-						resultadoFactorialDeY = CalcularFactorial((int)y);
+						resultadoFactorialDeX = CalcularFactorial(x);
+						resultadoFactorialDeY = CalcularFactorial(y);
 
 						if(banderaDivision == SE_REALIZO && resultadoFactorialDeX != -1 && resultadoFactorialDeY != -1)//Valida si se puedieron realizar todas las operaciones
 						{
@@ -151,7 +151,7 @@ int main(void)
 						}
 						else
 						{
-							printf("e)No se puede realizar el factorial de un numero negativo (A)\n");
+							printf("e)No se pudo realizar el factorial (A)\n");
 						}
 
 						if(resultadoFactorialDeY != -1)
@@ -160,7 +160,7 @@ int main(void)
 						}
 						else
 						{
-							printf("f)No se puede realizar el factorial de un numero negativo (B)\n");
+							printf("f)No se pudo realizar el factorial (B)\n");
 						}
 					}
 					else

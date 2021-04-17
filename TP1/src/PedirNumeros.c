@@ -1,11 +1,11 @@
 /*
- * PedirEnteros.c
+ * PedirNumeros.c
  *
  *  Created on: 7 abr. 2021
  *      Author: Julian
  */
 
-#include "PedirEnteros.h"
+#include "PedirNumeros.h"
 
 float PedirPrimerOperando(void)
 {

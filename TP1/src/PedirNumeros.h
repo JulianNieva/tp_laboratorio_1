@@ -1,5 +1,5 @@
 /*
- * PedirEnteros.h
+ * PedirNumeros.h
  *
  *  Created on: 7 abr. 2021
  *      Author: Julian
@@ -8,8 +8,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifndef PEDIRENTEROS_H_
-#define PEDIRENTEROS_H_
+#ifndef PEDIRNUMEROS_H_
+#define PEDIRNUMEROS_H_
 
 /**
  * @fn float PedirPrimerOperando(void)

@@ -55,14 +55,17 @@ float CalcularMultiplicacion (float primerNumero, float segundoNumero)
 }
 
 
-unsigned long long int CalcularFactorial (int numero)
+unsigned long long int CalcularFactorial (float numero)
 {
 	float i;
 	unsigned long long int factorial;
+	int auxiliarNumero;
+
+	auxiliarNumero = (int)numero;
 
 	factorial = 1;
 
-	if(numero < 0)
+	if(numero < 0 || numero - auxiliarNumero != 0)
 	{
 		factorial = -1;
 	}

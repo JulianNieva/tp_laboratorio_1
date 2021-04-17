@@ -57,6 +57,6 @@ float CalcularMultiplicacion (float, float);
  * @param Recibe el numero (x o y)
  * @return Devuelve el resultado de la factorizacion
  */
-unsigned long long int CalcularFactorial (int);
+unsigned long long int CalcularFactorial (float);
 
 #endif /* OPERACIONESMATEMATICAS_H_ */
