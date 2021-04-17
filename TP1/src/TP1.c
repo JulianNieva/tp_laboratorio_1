@@ -46,7 +46,7 @@ int main(void)
 		do
 		{
 			system("@cls||clear");
-			if(banderaPrimerOperando == NO_SE_INGRESO)	//Si no se ingreso el primer operando se muestra el msj correspondiente
+			if(banderaPrimerOperando == NO_SE_INGRESO)	//Si no se ingreso el primer operando se muestra el mensaje correspondiente
 			{
 				printf("1. Ingresar primer operando A \n");
 			}
@@ -55,7 +55,7 @@ int main(void)
 				printf("1. Ingresar primer operando (A = %.2f) \n", x);
 			}
 
-			if(banderaSegundoOperando == NO_SE_INGRESO)	//Si no se ingreso el segundo operando se muestra el msj correspondiente
+			if(banderaSegundoOperando == NO_SE_INGRESO)	//Si no se ingreso el segundo operando se muestra el mensaje correspondiente
 			{
 				printf("2. Ingresar segundo operando B \n");
 			}
@@ -112,13 +112,13 @@ int main(void)
 						resultadoFactorialDeX = CalcularFactorial((int)x);
 						resultadoFactorialDeY = CalcularFactorial((int)y);
 
-						if(banderaDivision == SE_REALIZO && resultadoFactorialDeX != -1 && resultadoFactorialDeY != -1)//Valida
+						if(banderaDivision == SE_REALIZO && resultadoFactorialDeX != -1 && resultadoFactorialDeY != -1)//Valida si se puedieron realizar todas las operaciones
 						{
 							printf("Se realizo todas las operaciones con exito!\n");
 						}
-						else
+						else	//En caso de que no se realizo algunas de las operaciones, muestra este mensaje
 						{
-							printf("Hubo errores en algunas operaciones\n");
+							printf("Hubo errores en algunas operaciones, se realizaron\n");
 						}
 					}
 					else	//Si no se ingreso ningun sea un operando, se muestra este mensaje
@@ -169,6 +169,10 @@ int main(void)
 					break;
 				case 5:
 					printf("Gracias por utilizar esta calculadora!");
+					break;
+				default:
+					printf("Por favor, ingrese una opcion valida\n");
+					system("pause");
 					break;
 			}//Fin del switch
 		}while(opcionIngresada != 5);	//Fin del do-while
