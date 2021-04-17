@@ -118,7 +118,7 @@ int main(void)
 						}
 						else	//En caso de que no se realizo algunas de las operaciones, muestra este mensaje
 						{
-							printf("Hubo errores en algunas operaciones, se realizaron\n");
+							printf("Hubo errores en el procesamiento de algun calculo, se realizaron las posibles operaciones\n");
 						}
 					}
 					else	//Si no se ingreso ningun sea un operando, se muestra este mensaje
