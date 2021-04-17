@@ -51,21 +51,12 @@ float CalcularDivision (float, float);
 float CalcularMultiplicacion (float, float);
 
 /**
- * @fn float CalcularFactorialX(float)
- * @brief Se calcula el factorial del primer operando (x)
+ * @fn unsigned long int CalcularFactorial(float)
+ * @brief Se calcula el factorial del numero
  *
- * @param Recibe el primer operando (x)
- * @return Devuelve el resultado del factorial x de tipo flotante
+ * @param Recibe el numero (x o y)
+ * @return Devuelve el resultado de la factorizacion
  */
-float CalcularFactorialX (float);
-
-/**
- * @fn float CalcularFactorialX(float)
- * @brief Se calcula el factorial del segundo operando (y)
- *
- * @param Recibe el segundo operando (y)
- * @return Devuelve el resultado del factorial y de tipo flotante
- */
-float CalcularFactorialY (float);
+unsigned long long int CalcularFactorial (int);
 
 #endif /* OPERACIONESMATEMATICAS_H_ */

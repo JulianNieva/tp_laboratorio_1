@@ -31,7 +31,16 @@ float CalcularDivision (float primerNumero, float segundoNumero)
 {
 	float resultado;
 
-	resultado = (float)primerNumero / segundoNumero;
+	resultado = 0;
+
+	if(segundoNumero == 0)
+	{
+		resultado = -1;
+	}
+	else
+	{
+		resultado = (float)primerNumero / segundoNumero;
+	}
 
 	return resultado;
 }
@@ -45,31 +54,24 @@ float CalcularMultiplicacion (float primerNumero, float segundoNumero)
 	return resultado;
 }
 
-float CalcularFactorialX (float primerNumero)
+
+unsigned long long int CalcularFactorial (int numero)
 {
 	float i;
-	float factorial;
+	unsigned long long int factorial;
 
 	factorial = 1;
 
-	for(i = primerNumero ;i > 0; i--)
+	if(numero < 0)
 	{
-		factorial = factorial * i;
+		factorial = -1;
 	}
-
-	return factorial;
-}
-
-float CalcularFactorialY (float segundoNumero)
-{
-	float i;
-	float factorial;
-
-	factorial = 1;
-
-	for(i = segundoNumero ;i > 0; i--)
+	else
 	{
-		factorial = factorial * i;
+		for(i = numero ;i > 0; i--)
+		{
+			factorial = factorial * i;
+		}
 	}
 
 	return factorial;

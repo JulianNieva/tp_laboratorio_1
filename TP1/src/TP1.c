@@ -33,11 +33,8 @@ int main(void)
 		float resultadoResta;
 		float resultadoDivision;
 		float resultadoMultiplicacion;
-		float resultadoFactorialDeX;
-		float resultadoFactorialDeY;
-
-		x = 0;
-		y = 0;
+		unsigned long long int resultadoFactorialDeX;
+		unsigned long long int resultadoFactorialDeY;
 
 		banderaDivision = NO_SE_REALIZO;
 		banderaSegundoOperando = NO_SE_INGRESO;
@@ -101,9 +98,9 @@ int main(void)
 						banderaCalculos = SE_REALIZO;
 						resultadoSuma = CalcularSuma(x,y);
 						resultadoResta = CalcularResta(x,y);
+						resultadoMultiplicacion = CalcularMultiplicacion(x,y);
 						if(y == 0)
 						{
-							printf("No se puede realizar la division por 0\n");
 							banderaDivision = NO_SE_REALIZO;
 						}
 						else
@@ -111,16 +108,17 @@ int main(void)
 							resultadoDivision = CalcularDivision(x,y);
 							banderaDivision = SE_REALIZO;
 						}
-						resultadoMultiplicacion = CalcularMultiplicacion(x,y);
-						resultadoFactorialDeX = CalcularFactorialX(x);
-						resultadoFactorialDeY = CalcularFactorialY(y);
-						if(banderaDivision == SE_REALIZO)
+
+						resultadoFactorialDeX = CalcularFactorial((int)x);
+						resultadoFactorialDeY = CalcularFactorial((int)y);
+
+						if(banderaDivision == SE_REALIZO && resultadoFactorialDeX != -1 && resultadoFactorialDeY != -1)//Valida
 						{
 							printf("Se realizo todas las operaciones con exito!\n");
 						}
 						else
 						{
-							printf("No se pudo realizar la division, pero el resto de las operaciones se realizaron con exito\n");
+							printf("Hubo errores en algunas operaciones\n");
 						}
 					}
 					else	//Si no se ingreso ningun sea un operando, se muestra este mensaje
@@ -134,18 +132,34 @@ int main(void)
 					if(banderaCalculos == SE_REALIZO)
 					{
 						printf("Primer operando (A = %.2f)\t Segundo Operando (B = %.2f)\n", x, y);
-						printf("\nEl resultado de %.2f + %.2f es: %.2f \n", x, y, resultadoSuma);
-						printf("El resultado de %.2f - %.2f es: %.2f \n", x, y, resultadoResta);
+						printf("\na)El resultado de A + B es: %.2f \n",resultadoSuma);
+						printf("b)El resultado de A - B es: %.2f \n",resultadoResta);
 						if(banderaDivision == SE_REALIZO)
 						{
-								printf("El resultado de %.2f / %.2f es: %.2f \n", x, y, resultadoDivision);
+							printf("c)El resultado de A / B es: %.2f \n",resultadoDivision);
 						}
 						else
 						{
-							printf("No se pudo realizar la division\n");
+							printf("c)No se pudo realizar la division\n");
 						}
-						printf("El resultado de %.2f * %.2f es: %.2f \n", x, y, resultadoMultiplicacion);
-						printf("El factorial de %.2f es: %.2f  Y el factorial de %.2f es: %.2f \n", x ,resultadoFactorialDeX, y , resultadoFactorialDeY);
+						printf("d)El resultado de A * B es: %.2f \n",resultadoMultiplicacion);
+						if(resultadoFactorialDeX != -1)
+						{
+							printf("e)El factorial de A! es: %I64u \n",resultadoFactorialDeX);
+						}
+						else
+						{
+							printf("e)No se puede realizar el factorial de un numero negativo (A)\n");
+						}
+
+						if(resultadoFactorialDeY != -1)
+						{
+							printf("f)El factorial de B! es: %I64u \n",resultadoFactorialDeY);
+						}
+						else
+						{
+							printf("f)No se puede realizar el factorial de un numero negativo (B)\n");
+						}
 					}
 					else
 					{
