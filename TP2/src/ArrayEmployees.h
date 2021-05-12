@@ -23,6 +23,14 @@ typedef struct
 	int isEmpty;
 }eEmployees;
 
-void InitEmployees(eEmployees[], int);
+void InitEmployees(eEmployees[]);
+
+int AddEmployees(eEmployees[]);
+
+int RemoveEmployees(eEmployees[]);
+
+int FindEmpty(eEmployees[]);
+
+int FindEmployeeById(eEmployees[], int);
 
 #endif /* ARRAYEMPLOYEES_H_ */

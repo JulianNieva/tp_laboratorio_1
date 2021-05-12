@@ -7,11 +7,17 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "Input.h"
 #include "Menu.h"
+#include "ArrayEmployees.h"
 
-void ShowcaseMenu(void)
+#define SE_INGRESO 1
+#define NO_SE_INGRESO 0
+
+void ShowcaseMenu(eEmployees employees[])
 {
 	int opcion;
+	int index;
 
 	do
 	{
@@ -20,27 +26,52 @@ void ShowcaseMenu(void)
 		puts("3. BAJA");
 		puts("4. INFORMAR");
 		puts("5. SALIR");
-		printf("Elija una opcion deseada: ");
-		scanf("%d", &opcion);
+		opcion = GetInt("Ingrese una opcion: ");
 
 		switch (opcion)
 		{
 		case 1:
-			puts("Voy a dar de alta algo pronto");
+			index = AddEmployees(employees);
+			if(index != -1)
+			{
+				puts("Se dio de alta al empleado con exito!");
+			}
+			else
+			{
+				puts("No hay mas espacio para ingresar otro empleado");
+			}
 			break;
 		case 2:
-			puts("Voy a modificar algo pronto");
+			puts("Podre modificar algo pronto");
 			break;
 		case 3:
-			puts("Voy a dar de baja algo pronto");
+			index = RemoveEmployees(employees);
+			if(index == -1)
+			{
+				puts("No se encontro el id del empleado...");
+			}
+			else
+			{
+				if(index == 0)
+				{
+					puts("Se cancelo la operacion");
+				}
+				else
+				{
+					puts("Se dio de baja el empleado con exito!");
+				}
+			}
 			break;
 		case 4:
-			puts("Pronto podre informar algo");
 			break;
 		case 5:
 			puts("Gracias por utilizar este programa!");
 			break;
 		}
 	}while(opcion != 5);
+}
+
+void ShowcaseSubMenu(eEmployees employees[])
+{
 
 }

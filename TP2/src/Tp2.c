@@ -15,11 +15,11 @@
 
 int main(void)
 {
-	eEmployees list[LIMIT];
+	eEmployees employeeList[LIMIT];
 
 	setbuf(stdout, NULL);
 
-	InitEmployees(list , LIMIT);
+	InitEmployees(employeeList);
 
-	ShowcaseMenu();
+	ShowcaseMenu(employeeList);
 }
