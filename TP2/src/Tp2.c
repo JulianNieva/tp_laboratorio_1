@@ -11,67 +11,101 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "ArrayEmployees.h"
+#include "Input.h"
+
+#define NOT_ENTERED 0
+#define ENTERED 1
 
 int main(void)
 {
 	eEmployees employeeList[LIMIT];
+	int option;
+	int index;
+	int id;
+	int flagEmployee = NOT_ENTERED;
 
 	setbuf(stdout, NULL);
 
-	InitEmployees(employeeList);
-
-	int opcion;
-	int index;
+	InitEmployees(employeeList,LIMIT);
 
 	do
+	{
+		puts("1. Add an employee");
+		puts("2. Modify an employee");
+		puts("3. Remove an employee");
+		puts("4. Inform");
+		puts("5. Exit");
+		option = GetInt("Choose an option:  ");
+
+		switch (option)
 		{
-			puts("1. ALTAS");
-			puts("2. MODIFICAR");
-			puts("3. BAJA");
-			puts("4. INFORMAR");
-			puts("5. SALIR");
-			opcion = GetInt("Ingrese una opcion: ");
-
-			switch (opcion)
+		case 1:
+			if(index != -1)
 			{
-			case 1:
-				index = AddEmployees(employeeList);
-				if(index != -1)
-				{
-					puts("Se dio de alta al empleado con exito!");
-				}
-				else
-				{
-					puts("No hay mas espacio para ingresar otro empleado");
-				}
-				break;
-			case 2:
-				puts("Podre modificar algo pronto");
-				break;
-			case 3:
-
-				index = RemoveEmployees(employeeList);
+				puts("The employee has been succesfully added!");
+			}
+			else
+			{
+				puts("There is no more space to add another employee..");
+			}
+			flagEmployee = ENTERED;
+			break;
+		case 2:
+			if(flagEmployee == ENTERED)
+			{
+				PrintEmployees(employeeList,LIMIT);
+				index = InitModifyProccess(employeeList,LIMIT);
 				if(index == -1)
 				{
-					puts("No se encontro el id del empleado...");
+					puts("The employee id could not be found");
+				}
+			}
+			else
+			{
+				puts("Be sure to add at least one employee before you modify one");
+			}
+			break;
+		case 3:
+			if(flagEmployee == ENTERED)
+			{
+				PrintEmployees(employeeList,LIMIT);
+				id = GetInt("Enter the id of the employee you wish to remove: ");
+				index = RemoveEmployees(employeeList, LIMIT, id);
+				if(index == -1)
+				{
+					puts("The employee id could not be found");
 				}
 				else
 				{
 					if(index == 0)
 					{
-						puts("Se cancelo la operacion");
+						puts("You cancelled the operation...");
 					}
 					else
 					{
-						puts("Se dio de baja el empleado con exito!");
+						puts("The employee has been succesfully removed!");
 					}
 				}
-				break;
-			case 4:
-				break;
-			case 5:
-				puts("Gracias por utilizar este programa!");
-				break;
 			}
-		}while(opcion != 5);
+			else
+			{
+				puts("Be sure to add at least one employee before you remove one");
+			}
+			break;
+		case 4:
+			if(flagEmployee == ENTERED)
+			{
+				puts("I will be able to inform something soon...");
+				PrintEmployees(employeeList,LIMIT);
+			}
+			else
+			{
+				puts("Be sure to add at least one employee before you can see a report");
+			}
+			break;
+		case 5:
+			puts("Thank you for using our service!");
+			break;
+		}
+	}while(option != 5);
 }
