@@ -74,5 +74,4 @@ int main(void)
 				break;
 			}
 		}while(opcion != 5);
-
 }
