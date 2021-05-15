@@ -23,9 +23,16 @@ typedef struct
 	int isEmpty;
 }eEmployees;
 
+
+int ShowMenu(void);
+
 int InitEmployees(eEmployees[], int);
 
-int IncreaseIdAutomatically(void);
+void IncreaseIdAutomatically(int*);
+
+int AskForData(eEmployees[], int, int*);
+
+int AddEmployee(eEmployees[], int, int, char[], char[], float, int, int);
 
 int RemoveEmployees(eEmployees[], int, int);
 
@@ -40,5 +47,11 @@ int FindEmployeeById(eEmployees[], int,int);
 int PrintEmployees(eEmployees[], int);
 
 void PrintOneEmployee(eEmployees);
+
+int ShowInformSubMenu(eEmployees[], int);
+
+void CalculateTotalOfSalary(eEmployees[], int);
+
+int PrintEmployeeWhoExceedTheAverageSalary(eEmployees[], int, float);
 
 #endif /* ARRAYEMPLOYEES_H_ */

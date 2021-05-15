@@ -8,40 +8,24 @@
 #ifndef INPUT_H_
 #define INPUT_H_
 
-/**
- * @fn int GetInt(char[])
- * @brief Pido un entero y lo devuelvo
- *
- * @param mensaje Mensaje a mostrar al usuario sobre lo que deba ingresar
- * @return numero Retorna el entero ingresado
- */
-int GetInt(char[]);
+int isChar(char string[]);
 
-/**
- * @fn float GetFloat(char[])
- * @brief Pido un decimal y lo devuelvo
- *
- * @param mensaje Mensaje a mostrar al usuario sobre lo que deba ingresar
- * @return numero Retorna el decimal ingresado
- */
-float GetFloat(char[]);
+int getString(char input[], int tam);
 
-/**
- * @fn char GetChar(char[])
- * @brief Pido un caracter y lo devuelvo
- *
- * @param mensaje Mensaje a mostrar al usuario sobre lo que deba ingresar
- * @return letra Retorna la letra
- */
-char GetChar(char[]);
+int SizeString(char string[]);
 
-/**
- * @fn void GetString(char[], char[])
- * @brief Pido que ingrese una palabra
- *
- * @param mensaje Mensaje a mostrar al usuario sobre lo que deba ingresar
- * @param text Texto que recibe y sera modificado en el momento
- */
-void GetString(char[], char[]);
+int utn_getString(char mensaje[], char mensajeError[], int tam, int reintentos, char input[]);
+
+int isInt(char input[]);
+
+int getInt(int* input);
+
+int utn_getInt(char mensaje[], char mensajeError[], int min, int max, int reintentos, int* input);
+
+int isFloat(char input[]);
+
+int getFloat(float* input);
+
+int utn_getFloat(char mensaje[], char mensajeError[], float min, float max, int reintentos, float* input);
 
 #endif /* INPUT_H_ */
