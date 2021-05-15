@@ -69,9 +69,9 @@ int AskForData(eEmployees employees[], int lenght, int* id)
 			utn_getString("Please enter the name of the employee: ", "Please enter a valid name\n ",51,4, name);
 			utn_getString("Please enter the last name of the employee: ", "Please enter a valid last name \n", 51, 4,lastName);
 			utn_getFloat("Please enter the salary of the employee: ", "Error, please enter a valid salary (Between 1000 to 10000)\n", 1000, 10000, 4, &salary);
-			utn_getInt("Please enter the sector ID\n(Enter a number between 1 to 10): ","Error, please enter a valid number\n", 1,10,4, &sector);
+			utn_getInt("Please enter the sector ID\n(Enter a number between 1 to 4): ","Error, please enter a valid number\n", 1,4,4, &sector);
 
-			AddEmployee(employees, lenght, idAux, name, lastName, salary, sector, index);
+			AddEmployee(&employees[index], lenght, idAux, name, lastName, salary, sector);
 
 			value = 0;
 		}
@@ -84,20 +84,20 @@ int AskForData(eEmployees employees[], int lenght, int* id)
 	return value;
 }
 
-int AddEmployee(eEmployees employees[], int lenght, int id, char name[], char lastName[], float salary, int sector,int index)
+int AddEmployee(eEmployees* employee, int lenght, int id, char name[], char lastName[], float salary, int sector)
 {
 	int value = -1;
 
-	if(employees != NULL && lenght > 0 && name != NULL && lastName != NULL && id > 0 && salary > 0 && sector > 0)
+	if(employee != NULL && lenght > 0 && name != NULL && lastName != NULL && id > 0 && salary > 0 && sector > 0)
 	{
 		value = 0;
 
-		employees[index].id = id;
-		employees[index].salary = salary;
-		strcpy(employees[index].name, name);
-		strcpy(employees[index].lastName, lastName);
-		employees[index].sector = sector;
-		employees[index].isEmpty = NOT_EMPTY;
+		employee->id = id;
+		employee->salary = salary;
+		strcpy(employee->name, name);
+		strcpy(employee->lastName, lastName);
+		employee->sector = sector;
+		employee->isEmpty = NOT_EMPTY;
 
 		printf("The employee has been successfully added!\n");
 	}
@@ -212,7 +212,7 @@ void ModifyEmployee(eEmployees* employee)
 				printf("You have successfully changed the salary!\n");
 				break;
 			case 4:
-				utn_getInt("Please enter the new sector ID\n(Enter a number between 1 to 10): ","Error, please enter a valid number\n", 1,10,4, &employee->sector);
+				utn_getInt("Please enter the new sector ID\n(Enter a number between 1 to 4): ","Error, please enter a valid number\n", 1,4,4, &employee->sector);
 				printf("You have successfully changed the sector!\n");
 				break;
 			case 5:
@@ -229,12 +229,15 @@ int FindEmpty(eEmployees listOfEmployees[], int lenght)
 	int index;
 	index = -1;
 
-	for(i = 0; i < lenght; i++)
+	if(listOfEmployees != NULL && lenght > 0)
 	{
-		if(listOfEmployees[i].isEmpty == EMPTY)
+		for(i = 0; i < lenght; i++)
 		{
-			index = i;
-			break;
+			if(listOfEmployees[i].isEmpty == EMPTY)
+			{
+				index = i;
+				break;
+			}
 		}
 	}
 
@@ -251,7 +254,7 @@ int FindEmployeeById(eEmployees listOfEmployees[], int lenght,int id)
 	{
 		for(i = 0; i < lenght; i++)
 		{
-			if(id == listOfEmployees[i].id)
+			if(id == listOfEmployees[i].id && listOfEmployees[i].isEmpty != EMPTY)
 			{
 				index = i;
 				break;
@@ -269,7 +272,9 @@ int PrintEmployees(eEmployees employees[], int lenght)
 
 	if(employees != NULL || lenght > 0)
 	{
-		printf("ID \t Name \t Last Name \t Salary \t Sector\n");
+	    printf("|         |                          |                 |            |\n");
+	    printf("|     ID  | Name     Last Name       |  Salary         |   Sector   |\n");
+	    printf("|_________|__________________________|_________________|____________|\n");
 		for(i = 0; i < lenght; i++)
 		{
 			if(employees[i].isEmpty != EMPTY)
@@ -277,6 +282,7 @@ int PrintEmployees(eEmployees employees[], int lenght)
 				PrintOneEmployee(employees[i]);
 			}
 		}
+		printf("|_________|__________________________|_________________|____________|\n");
 		value = 0;
 	}
 
@@ -285,13 +291,14 @@ int PrintEmployees(eEmployees employees[], int lenght)
 
 void PrintOneEmployee(eEmployees employee)
 {
-	printf("%d %s %s %.2f %d\n",employee.id,employee.name,employee.lastName,employee.salary,employee.sector);
+	printf("|      %d  | %-10s %s         | %.2f         |      %d     |\n",employee.id,employee.name,employee.lastName,employee.salary,employee.sector);
 }
 
 int ShowInformSubMenu(eEmployees employees[], int lenght)
 {
 	int option;
 	int value = -1;
+	int order;
 
 	if(employees != NULL && lenght > 0)
 	{
@@ -306,7 +313,8 @@ int ShowInformSubMenu(eEmployees employees[], int lenght)
 			switch (option)
 			{
 				case 1:
-					printf("Coming soon...\n");
+					utn_getInt("Please enter the order you wish to see the list of the employees\n(1 to show it in UP order, 0 DOWN order)","Error, please enter a valid option\n", 0,1,4,&order);
+					SortEmployees(employees,lenght, order);
 					break;
 				case 2:
 					CalculateTotalOfSalary(employees,lenght);
@@ -321,28 +329,38 @@ int ShowInformSubMenu(eEmployees employees[], int lenght)
 
 }
 
-void CalculateTotalOfSalary(eEmployees employees[], int lenght)
+int CalculateTotalOfSalary(eEmployees employees[], int lenght)
 {
 	int i;
-	float average;
+	int value = -1;
+	float average = 0;
 	float acumulator = 0;
 	int counter = 0;
 
-	for(i = 0; i < lenght; i++)
+	if(employees != NULL && lenght > 0)
 	{
-		if(employees[i].isEmpty != EMPTY)
+		value = 0;
+		for(i = 0; i < lenght; i++)
 		{
-			acumulator = acumulator + employees[i].salary;
-			counter++;
+			if(employees[i].isEmpty != EMPTY)
+			{
+				acumulator = acumulator + employees[i].salary;
+				counter++;
+			}
 		}
+
+		if(acumulator > 0)
+		{
+			average = acumulator / counter;
+		}
+		printf(">>>>>The total of the employees salaries is: %.2f<<<<<\n",acumulator);
+		printf(">>>>>The average salary of the employees is: %.2f<<<<<\n",average);
+
+		PrintEmployeeWhoExceedTheAverageSalary(employees, lenght, average);
+
 	}
 
-	average = acumulator / counter;
-
-	printf("The total of the employees salaries is: %.2f\n",acumulator);
-	printf("The average salary of the employees is: %.2f\n",average);
-
-	PrintEmployeeWhoExceedTheAverageSalary(employees, lenght, average);
+	return value;
 
 }
 
@@ -353,7 +371,10 @@ int PrintEmployeeWhoExceedTheAverageSalary(eEmployees employees[], int lenght, f
 
 	if(employees != NULL && lenght > 0 && average > 0)
 	{
-		value = 0;
+		printf("////These are the employees who exceed the average salary//// \n");
+	    printf("|         |                          |                 |            |\n");
+	    printf("|     ID  | Name     Last Name       |  Salary         |   Sector   |\n");
+	    printf("|_________|__________________________|_________________|____________|\n");
 		for(i = 0; i < lenght; i++)
 		{
 			if(employees[i].isEmpty != EMPTY && employees[i].salary > average)
@@ -361,6 +382,61 @@ int PrintEmployeeWhoExceedTheAverageSalary(eEmployees employees[], int lenght, f
 				PrintOneEmployee(employees[i]);
 			}
 		}
+		value = 0;
+	}
+
+	return value;
+}
+
+int SortEmployees(eEmployees employees[], int lenght, int order)
+{
+	int value = -1;
+	int i;
+	int j;
+	eEmployees aux;
+
+	if(employees != NULL && lenght > 0 && (order == 0 || order == 1))
+	{
+		value = 0;
+
+		if(order == 1)
+		{
+			// A-Z
+			for(i = 0; i < lenght - 1; i++)
+			{
+				for(j = i + 1; j < lenght; j++)
+				{
+					if(employees[i].sector > employees[j].sector || (employees[i].sector == employees[j].sector && stricmp(employees[i].lastName,employees[j].lastName)>0) ||
+					(employees[i].sector == employees[j].sector && stricmp(employees[i].lastName,employees[j].lastName)== 0 && stricmp(employees[i].name,employees[j].name) > 0))
+
+					{
+						aux = employees[i];
+						employees[i] = employees[j];
+						employees[j] = aux;
+					}
+				}
+			}
+		}
+		else
+		{
+			//Z-A
+			for(i = 0; i < lenght - 1; i++)
+			{
+				for(j = i + 1; j < lenght; j++)
+				{
+					if(employees[i].sector > employees[j].sector || (employees[i].sector == employees[j].sector && stricmp(employees[i].lastName,employees[j].lastName)<0) ||
+					  (employees[i].sector == employees[j].sector && stricmp(employees[i].lastName,employees[j].lastName)== 0 && stricmp(employees[i].name,employees[j].name) < 0))
+
+					{
+						aux = employees[i];
+						employees[i] = employees[j];
+						employees[j] = aux;
+					}
+				}
+			}
+		}
+
+		PrintEmployees(employees,lenght);
 	}
 
 	return value;
