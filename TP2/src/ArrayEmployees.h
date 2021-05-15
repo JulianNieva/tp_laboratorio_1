@@ -11,7 +11,7 @@
 #define EMPTY 0
 #define NOT_EMPTY 1
 
-#define LIMIT 10
+#define LIMIT 1000
 
 typedef struct
 {
