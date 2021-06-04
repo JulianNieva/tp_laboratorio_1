@@ -33,15 +33,11 @@ Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajad
 	auxHoras = atoi(horasTrabajadasStr);
 	auxSueldo = atoi(sueldoStr);
 
-	printf("tEST1");
-
 	this = employee_new();
-	printf("tEST1");
 
 		//Valido de que las funciones me devuelvan todo ok
 	if(employee_setId(this,auxId)== -1 || employee_setNombre(this,nombreStr) == -1|| employee_setHorasTrabajadas(this,auxHoras) == -1 || employee_setSueldo(this,auxSueldo) == -1)
 	{
-		printf("tEST1");
 		employee_delete(this);	//Si no entro al if, llamo a la funcion para borrar al empleado
 		this = NULL;	//Devuelvo NULL
 	}

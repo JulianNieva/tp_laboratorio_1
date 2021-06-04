@@ -20,8 +20,6 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
 		return ERROR;
 	}
 
-	printf("Hola1");
-
 	FILE* pFile;
 	Employee *auxiliar;
 
@@ -37,24 +35,16 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
 		return ERROR;
 	}
 
-	printf("Hola2");
-
 	fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n",buffferId,buffferNombre,buffferHoras,buffferSueldo);
 
 	while(fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n",buffferId,buffferNombre,buffferHoras,buffferSueldo) == 4)
 	{
-		printf("Hola4");
 		auxiliar = employee_newParametros(buffferId,buffferNombre,buffferHoras,buffferSueldo);
-
-		printf("Hola4");
 
 		ll_add(pArrayListEmployee, auxiliar);
 	}
-	printf("Hola3");
 
 	fclose(pFile);
-
-	printf("\n\n\n%d\n\n\n", ll_len(pArrayListEmployee));
 
     return EXITO;
 }
