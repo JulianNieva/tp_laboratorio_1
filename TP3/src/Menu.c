@@ -9,7 +9,7 @@
 #include "Menu.h"
 #include "Input.h"
 
-int MainMenu(void)
+int MenuPrincipal(void)
 {
 	int option;
 	printf("1. Cargar los datos de los empleados desde el archivo data.csv (modo texto).\n");
@@ -28,9 +28,15 @@ int MainMenu(void)
 	return option;
 }
 
-/*int SubMenu(void)
+int SubMenuModificar(void)
 {
 	int option;
 
+	printf("1. Modificar nombre\n");
+	printf("2. Modificar horario de trabajo\n");
+	printf("3. Modificar sueldo\n");
+
+	utn_getInt("Elija una opcion: ", "Error. Asegurese de ingresar una opcion valida", 1, 3, 6, &option);
+
 	return option;
-}*/
+}

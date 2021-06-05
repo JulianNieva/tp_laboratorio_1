@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "LinkedList.h"
 #include "Employee.h"
 #include "Input.h"
+#include "parser.h"
+#include "Menu.h"
 
 #define ERROR -1
 #define EXITO 0
@@ -22,27 +25,12 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
 	}
 
 	FILE* pFile;
-	Employee* auxiliar;
-
-	char buffferId[20];
-	char buffferNombre[100];
-	char buffferHoras[20];
-	char buffferSueldo[20];
 
 	pFile = fopen(path,"r");
 
-	if(pFile == NULL)
+	if(pFile != NULL)
 	{
-		return ERROR;
-	}
-
-	fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n",buffferId,buffferNombre,buffferHoras,buffferSueldo);
-
-	while(fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n",buffferId,buffferNombre,buffferHoras,buffferSueldo) == 4)
-	{
-		auxiliar = employee_newParametrosTXT(buffferId,buffferNombre,buffferHoras,buffferSueldo);
-
-		ll_add(pArrayListEmployee, auxiliar);
+		parser_EmployeeFromText(pFile, pArrayListEmployee);
 	}
 
 	fclose(pFile);
@@ -65,27 +53,12 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 	}
 
 	FILE* pFile;
-	Employee* auxiliar = NULL;
-	char buffferId[20];
-	char buffferNombre[128];
-	char buffferHoras[20];
-	char buffferSueldo[20];
 
 	pFile = fopen(path,"rb");
 
-	if(pFile == NULL)
+	if(pFile != NULL)
 	{
 		return ERROR;
-	}
-
-	fread(auxiliar,sizeof(Employee),1,pFile);
-
-	while(!feof(pFile))
-	{
-		fread(auxiliar,sizeof(Employee),1,pFile);
-		auxiliar = employee_newParametrosTXT(buffferId,buffferNombre,buffferHoras,buffferSueldo);
-
-		ll_add(pArrayListEmployee, auxiliar);
 	}
 
 	fclose(pFile);
@@ -138,7 +111,63 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_editEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+	int retorno = -1;
+	int index = -1;
+	int idAux;
+	int lenght;
+	char respuesta[4];
+	Employee* aux;
+
+	if(pArrayListEmployee != NULL)
+	{
+		printf("Ingrese el ID del empleado que desea eliminar: ");
+		getInt(&idAux);
+
+		lenght = ll_len(pArrayListEmployee);
+
+		for(int i = 0; i < lenght; i++)
+		{
+			aux = (Employee*)ll_get(pArrayListEmployee, i);
+
+			if(aux->id == idAux)
+			{
+				retorno = 0;
+				index = i;
+				break;
+			}
+		}
+
+		if(index != -1)
+		{
+			utn_getString("Estas seguro que desea modificar este empleado?\n(Escriba SI para aceptar): ", "Error. Ingrese una respuesta valida", 4, 6, respuesta);
+
+			if(stricmp(respuesta,"si") == 0)
+			{
+				do
+				{
+					switch(SubMenuModificar())
+					{
+						case 1:
+							utn_getString("Ingrese el nuevo nombre del empleado: ", "Error. Ingrese un nombre valido", 128, 6, aux->nombre);
+							break;
+						case 2:
+							utn_getInt("Ingrese el nuevo horario laboral del empleado: ", "Error. Ingrese un horario valido", 70, 350, 6, &aux->horasTrabajadas);
+							break;
+						case 3:
+							utn_getInt("Ingrese el nuevo sueldo del empleado", "Error. Ingrese un sueldo valido", 10000, 400000, 6, &aux->sueldo);
+							break;
+					}
+
+					utn_getString("Desea seguir modificando?\n(Escriba SI para aceptar): ", "Error. Ingrese una respuesta valida", 4, 6, respuesta);
+
+				}while(stricmp(respuesta, "si") == 0);
+
+				//ll_set(pArrayListEmployee, index,aux);
+			}
+		}
+	}
+
+    return retorno;
 }
 
 /** \brief Baja de empleado
@@ -150,7 +179,44 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_removeEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+	int retorno = -1;
+	int idAux;
+	int lenght;
+	char respuesta[4];
+	Employee* aux;
+
+	if(pArrayListEmployee != NULL)
+	{
+		printf("Ingrese el ID del empleado que desea eliminar: ");
+		getInt(&idAux);
+
+		lenght = ll_len(pArrayListEmployee);
+
+		for(int i = 0; i < lenght; i++)
+		{
+			aux = (Employee*)ll_get(pArrayListEmployee, i);
+
+			if(aux->id == idAux)
+			{
+				retorno = 0;
+
+				utn_getString("Estas seguro que desea eliminar este empleado?\n(Escriba SI para aceptar): ", "Error. Ingrese una respuesta valida", 4, 6, respuesta);
+
+				if(stricmp(respuesta,"si") == 0)
+				{
+					ll_remove(pArrayListEmployee,i);
+					printf("Se elimino al empleado exitosamente!\n");
+				}
+				else
+				{
+					printf("Usted cancelo la operacion....\n");
+				}
+				break;
+			}
+		}
+	}
+
+    return retorno;
 }
 
 /** \brief Listar empleados

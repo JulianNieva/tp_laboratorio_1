@@ -8,8 +8,8 @@
 #ifndef MENU_H_
 #define MENU_H_
 
-int MainMenu(void);
+int MenuPrincipal(void);
 
-int SubMenu(void);
+int SubMenuModificar(void);
 
 #endif /* MENU_H_ */
