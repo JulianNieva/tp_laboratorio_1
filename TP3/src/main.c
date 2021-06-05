@@ -75,6 +75,8 @@ int main()
         }
     }while(stricmp(respuesta, "si") == 0);
 
+    ll_deleteLinkedList(listaEmpleados);
+
     return 0;
 }
 

@@ -21,9 +21,8 @@ Employee* employee_new(void)	//Constructor
 	return 	aux;	//Retorna el puntero a la entidad que reservo en memoria
 }
 
-Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajadasStr,char* sueldoStr)	//Constructor con parametros
+Employee* employee_newParametrosTXT(char* idStr,char* nombreStr,char* horasTrabajadasStr,char* sueldoStr)	//Constructor con parametros (texto)
 {
-
 	Employee* this;
 	int auxId;
 	int auxHoras;
@@ -45,6 +44,22 @@ Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajad
 	return this;	//Si entro al if, devuelvo el empleado
 }
 
+Employee* employee_newParametros(int id,char* nombre,int horasTrabajadas,int sueldo)	//Constructor sin lectura de texto
+{
+	Employee* this;
+
+	this = employee_new();
+
+		//Valido de que las funciones me devuelvan todo ok
+	if(employee_setId(this,id)== -1 || employee_setNombre(this,nombre) == -1|| employee_setHorasTrabajadas(this,horasTrabajadas) == -1 || employee_setSueldo(this,sueldo) == -1)
+	{
+		employee_delete(this);	//Si no entro al if, llamo a la funcion para borrar al empleado
+		this = NULL;	//Devuelvo NULL
+	}
+
+	return this;	//Si entro al if, devuelvo el empleado
+}
+
 void employee_delete(Employee* this)	//Destructor
 {
 	free(this); //Se encarga de liberar la memoria reservada para el empleado
@@ -53,12 +68,12 @@ void employee_delete(Employee* this)	//Destructor
 int employee_setId(Employee* this,int id)
 {
 	int retorno = -1;
-	static int idMaximo  = -1;
+	static int idMaximo = -1;
 
 	if(this != NULL)
 	{
 		retorno = 0;
-		if(id < 0)	//Primero me fijo si el id recibido es un numero negativo
+		if(id <= idMaximo)	//Primero me fijo si el id recibido es un numero negativo
 		{
 			//Si es negativo, lo calculo automaticamente con el idMaximo y lo guardo en la entidad
 			idMaximo++;
@@ -70,7 +85,7 @@ int employee_setId(Employee* this,int id)
 			{
 				//Si es mayor, actualizo su valor y guardi el id en la entidad
 				idMaximo = id;
-				this->id = id;
+				this->id = idMaximo;
 			}
 		}
 	}

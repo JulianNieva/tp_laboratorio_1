@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "LinkedList.h"
 #include "Employee.h"
+#include "Input.h"
 
 #define ERROR -1
 #define EXITO 0
@@ -21,7 +22,7 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
 	}
 
 	FILE* pFile;
-	Employee *auxiliar;
+	Employee* auxiliar;
 
 	char buffferId[20];
 	char buffferNombre[100];
@@ -39,7 +40,7 @@ int controller_loadFromText(char* path , LinkedList* pArrayListEmployee)
 
 	while(fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n",buffferId,buffferNombre,buffferHoras,buffferSueldo) == 4)
 	{
-		auxiliar = employee_newParametros(buffferId,buffferNombre,buffferHoras,buffferSueldo);
+		auxiliar = employee_newParametrosTXT(buffferId,buffferNombre,buffferHoras,buffferSueldo);
 
 		ll_add(pArrayListEmployee, auxiliar);
 	}
@@ -66,7 +67,7 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 	FILE* pFile;
 	Employee* auxiliar = NULL;
 	char buffferId[20];
-	char buffferNombre[20];
+	char buffferNombre[128];
 	char buffferHoras[20];
 	char buffferSueldo[20];
 
@@ -82,7 +83,7 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 	while(!feof(pFile))
 	{
 		fread(auxiliar,sizeof(Employee),1,pFile);
-		auxiliar = employee_newParametros(buffferId,buffferNombre,buffferHoras,buffferSueldo);
+		auxiliar = employee_newParametrosTXT(buffferId,buffferNombre,buffferHoras,buffferSueldo);
 
 		ll_add(pArrayListEmployee, auxiliar);
 	}
@@ -101,7 +102,31 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
  */
 int controller_addEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+	int retorno = -1;
+	Employee* aux;
+	char auxNombre[128];
+	int auxHoras;
+	int auxSueldo;
+
+	if(pArrayListEmployee != NULL)
+	{
+		utn_getString("Ingrese el nombre del empleado", "Error. Ingrese un nombre valido", 128, 6, auxNombre);
+		utn_getInt("Ingrese las horas que trabaja el empleado", "Error. Ingrese un horario valido", 70, 350, 6, &auxHoras);
+		utn_getInt("Ingrese el sueldo del empleado", "Error. Ingrese un sueldo valido", 10000, 400000, 6, &auxSueldo);
+
+		aux = employee_newParametros(1,auxNombre,auxHoras,auxSueldo);
+
+		if(aux != NULL)
+		{
+			retorno = 0;
+
+			ll_add(pArrayListEmployee, aux);
+
+			printf("Se dio de alta el empleado\n");
+		}
+	}
+
+    return retorno;
 }
 
 /** \brief Modificar datos de empleado
@@ -139,13 +164,23 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
 {
 	int retorno = ERROR;
 	Employee* aux = NULL;
-	Node* nodoActual;
+	int lenght;
+	//Node* nodoActual;
 
 	if(pArrayListEmployee != NULL)
 	{
 		retorno = EXITO;
 
-		nodoActual = pArrayListEmployee->pFirstNode;
+		lenght = ll_len(pArrayListEmployee);
+
+		for(int i = 0; i < lenght; i++)
+		{
+			aux = (Employee*)ll_get(pArrayListEmployee, i);
+
+			employee_showOneEmployee(aux);
+		}
+
+		/*nodoActual = pArrayListEmployee->pFirstNode;
 
 		while(nodoActual != NULL)
 		{
@@ -154,7 +189,7 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
 			employee_showOneEmployee(aux);
 
 			nodoActual = nodoActual->pNextNode;
-		}
+		}*/
 	}
 
 	return retorno;
