@@ -187,3 +187,15 @@ void employee_showOneEmployee(Employee* empleados)
 {
 	printf("%d--%s--%d--%d\n",empleados->id,empleados->nombre,empleados->horasTrabajadas,empleados->sueldo);
 }
+
+int employee_compareByName(Employee* firstEmployee, Employee* secondEmployee)
+{
+	int comparacion;
+
+	if(firstEmployee != NULL && secondEmployee != NULL)
+	{
+		comparacion = stricmp(firstEmployee->nombre,secondEmployee->nombre);
+	}
+
+	return comparacion;
+}

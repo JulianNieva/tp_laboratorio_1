@@ -27,4 +27,6 @@ int employee_getSueldo(Employee* this,int* sueldo);
 
 void employee_showOneEmployee(Employee*);
 
+int employee_compareByName(Employee*,Employee*);
+
 #endif // employee_H_INCLUDED

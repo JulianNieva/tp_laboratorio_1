@@ -58,7 +58,7 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 
 	if(pFile != NULL)
 	{
-		return ERROR;
+		parser_EmployeeFromBinary(pFile ,pArrayListEmployee);
 	}
 
 	fclose(pFile);
@@ -83,9 +83,9 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 
 	if(pArrayListEmployee != NULL)
 	{
-		utn_getString("Ingrese el nombre del empleado", "Error. Ingrese un nombre valido", 128, 6, auxNombre);
-		utn_getInt("Ingrese las horas que trabaja el empleado", "Error. Ingrese un horario valido", 70, 350, 6, &auxHoras);
-		utn_getInt("Ingrese el sueldo del empleado", "Error. Ingrese un sueldo valido", 10000, 400000, 6, &auxSueldo);
+		utn_getString("Ingrese el nombre del empleado: ", "Error. Ingrese un nombre valido", 128, 6, auxNombre);
+		utn_getInt("Ingrese las horas que trabaja el empleado: ", "Error. Ingrese un horario valido", 70, 350, 6, &auxHoras);
+		utn_getInt("Ingrese el sueldo del empleado: ", "Error. Ingrese un sueldo valido", 10000, 400000, 6, &auxSueldo);
 
 		aux = employee_newParametros(1,auxNombre,auxHoras,auxSueldo);
 
@@ -270,7 +270,17 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_sortEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+	int retorno = -1;
+	int orden;
+
+	if(pArrayListEmployee != NULL)
+	{
+		utn_getInt("Ingrese el orden deseado\n(1 para ascendente, 0 para descendente):  ", "Error. Ingrese un orden valido ", 0, 1, 6, &orden);
+
+		ll_sort(pArrayListEmployee,employee_compareByName, orden);
+	}
+
+    return retorno;
 }
 
 /** \brief Guarda los datos de los empleados en el archivo data.csv (modo texto).

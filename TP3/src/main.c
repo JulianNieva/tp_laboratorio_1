@@ -53,7 +53,7 @@ int main()
             	break;
             case 7:
             	controller_sortEmployee(listaEmpleados);
-            	printf("Pronto podre ordenar los empleados\n");
+            	controller_ListEmployee(listaEmpleados);
             	break;
             case 8:
             	controller_saveAsText("data.csv",listaEmpleados);
