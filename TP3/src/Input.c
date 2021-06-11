@@ -31,14 +31,15 @@ int isChar(char string[])
 	return isOk;
 }
 
-int getString(char input[], int tam)
+int getString(char mensaje[],char input[], int tam)
 {
     char auxString[tam];
     int isOk = -1;
 
     if (input != NULL && tam > 0)
     {
-        fflush(stdin);
+        printf("%s",mensaje);
+    	fflush(stdin);
         fgets(auxString,tam,stdin);	//Se ingresa el string, cumpliendo con su limite
         if (auxString[strlen(auxString)-1]=='\n') //Se cuestiona si en la posicion final del string hay un "enter"
         {
@@ -85,8 +86,8 @@ int utn_getString(char mensaje[], char mensajeError[], int tam, int reintentos, 
     if(input != NULL && mensaje != NULL && mensajeError != NULL && tam > 0 && reintentos >= 0)
     {
         do{
-        	printf("%s", mensaje);
-            if(!(getString(auxString,tam)) && !(isChar(auxString)))	//Llamo a las funciones y si me devuelven todo bien, entro a la condicion
+        	//printf("%s", mensaje);
+            if(!(getString(mensaje,auxString,tam)) && !(isChar(auxString)))	//Llamo a las funciones y si me devuelven todo bien, entro a la condicion
             {
                 strncpy(input,auxString,tam);
                 isOk = 0;
@@ -122,12 +123,12 @@ int isInt(char input[])
     return isOk;
 }
 
-int getInt(int* input)
+int getInt(int* input,char mensaje[])
 {
     char auxString[400];
     int isOk = -1;
 
-    if(!(getString(auxString,sizeof(auxString))) && !(isInt(auxString))) //Utilizo el sizeof para pasarle el tamaño sin necesidad de escribir 400
+    if(!(getString(mensaje,auxString,sizeof(auxString))) && !(isInt(auxString))) //Utilizo el sizeof para pasarle el tamaño sin necesidad de escribir 400
     {
     	*input=atoi(auxString); // La cadena se convierte en int y la devuelve
     	isOk=0;
@@ -146,8 +147,8 @@ int utn_getInt(char mensaje[], char mensajeError[], int min, int max, int reinte
 	   do
 	   {
 			reintentos--;
-			printf("%s", mensaje);
-			if(!(getInt(&auxInt)) && auxInt >= min && auxInt <= max)	//Cuestiono si me devolvio un entero y si dicho entero respeta el max y el min
+			//printf("%s", mensaje);
+			if(!(getInt(&auxInt,mensaje)) && auxInt >= min && auxInt <= max)	//Cuestiono si me devolvio un entero y si dicho entero respeta el max y el min
 			{
 				*input= auxInt;
 				isOk = 0;
@@ -163,6 +164,7 @@ int utn_getInt(char mensaje[], char mensajeError[], int min, int max, int reinte
 
     return isOk;
 }
+
 //-----------------------------------FLOAT-----------------------------------
 int isFloat(char input[])
 {
@@ -182,12 +184,12 @@ int isFloat(char input[])
     return isOk;
 }
 
-int getFloat(float* input)
+int getFloat(char mensaje[],float* input)
 {
     char auxString[200];
     int isOk =-1;
 
-    if(!(getString(auxString,200)) && !(isFloat(auxString)))
+    if(!(getString(mensaje,auxString,200)) && !(isFloat(auxString)))
     {
         *input = atof(auxString); // La cadena se convierte en float y la devuelve
         isOk = 0;
@@ -205,8 +207,8 @@ int utn_getFloat(char mensaje[], char mensajeError[], float min, float max, int 
     {
         do
         {
-        	printf("%s", mensaje);
-        	if(!(getFloat(&auxFloat)) && auxFloat >= min && auxFloat <= max) //Cuestiono si me devolvio un flotante y si dicho flotante respeta el max y el min
+        	//printf("%s", mensaje);
+        	if(!(getFloat(mensaje,&auxFloat)) && auxFloat >= min && auxFloat <= max) //Cuestiono si me devolvio un flotante y si dicho flotante respeta el max y el min
         	{
         		*input= auxFloat;
         		isOk = 0;

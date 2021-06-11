@@ -16,27 +16,35 @@
  */
 int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 {
+	int retorno = -1;
 	Employee* auxiliar;
 	char bufferId[50];
 	char bufferNombre[50];
 	char bufferHoras[50];
 	char bufferSueldo[50];
 
-	if(pFile == NULL && pArrayListEmployee == NULL)
+	if(pFile != NULL && pArrayListEmployee != NULL)
 	{
-		return ERROR;
+		fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n",bufferId,bufferNombre,bufferHoras,bufferSueldo);	//Lee el encabezado
+
+		while(fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n",bufferId,bufferNombre,bufferHoras,bufferSueldo) == 4)
+		{
+			retorno = EXITO;
+			auxiliar = employee_newParametros(bufferId,bufferNombre,bufferHoras,bufferSueldo);
+
+			if(!ll_add(pArrayListEmployee, auxiliar))//Acordarse de validar si lo pudo agregar
+			{
+				retorno = 0;
+			}
+			else
+			{
+				retorno = -1;
+				break;
+			}
+		}
 	}
 
-	fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n",bufferId,bufferNombre,bufferHoras,bufferSueldo);
-
-	while(fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n",bufferId,bufferNombre,bufferHoras,bufferSueldo) == 4)
-	{
-		auxiliar = employee_newParametrosTXT(bufferId,bufferNombre,bufferHoras,bufferSueldo);
-
-		ll_add(pArrayListEmployee, auxiliar);
-	}
-
-    return EXITO;
+    return retorno;
 }
 
 /** \brief Parsea los datos los datos de los empleados desde el archivo data.bin (modo binario).
@@ -48,30 +56,35 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
  */
 int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 {
-	Employee* auxiliar = NULL;
+	Employee auxiliar;
+
+	int retorno = ERROR;
+
 	char bufferId[20];
-	char bufferNombre[128];
 	char bufferHoras[20];
 	char bufferSueldo[20];
 
-	if(pFile == NULL && pArrayListEmployee == NULL)
+	if(pFile != NULL && pArrayListEmployee != NULL)
 	{
-		return ERROR;
+		while(fread(&auxiliar,sizeof(Employee),1,pFile) == 1)
+		{
+			itoa(auxiliar.id,bufferId,10);
+			itoa(auxiliar.horasTrabajadas,bufferHoras,10);
+			itoa(auxiliar.sueldo,bufferSueldo,10);
+
+			Employee* aAgregar = employee_newParametros(bufferId,auxiliar.nombre,bufferHoras,bufferSueldo);
+
+			if(!ll_add(pArrayListEmployee, aAgregar)) //Acordarse de validar si lo pudo agregar
+			{
+				retorno = 0;
+			}
+			else
+			{
+				retorno = -1;
+				break;
+			}
+		}
 	}
 
-	fread(auxiliar,sizeof(Employee),1,pFile);
-
-	parser_EmployeeFromBinary(pFile, pArrayListEmployee);
-
-	while(!feof(pFile))
-	{
-		fread(auxiliar,sizeof(Employee),1,pFile);
-		auxiliar = employee_newParametrosTXT(bufferId,bufferNombre,bufferHoras,bufferSueldo);
-
-		ll_add(pArrayListEmployee, auxiliar);
-	}
-
-	fclose(pFile);
-
-    return 1;
+    return retorno;
 }

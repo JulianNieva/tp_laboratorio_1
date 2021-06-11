@@ -12,4 +12,6 @@ int MenuPrincipal(void);
 
 int SubMenuModificar(void);
 
+int SubMenuCriterioOrdenamiento(void);
+
 #endif /* MENU_H_ */

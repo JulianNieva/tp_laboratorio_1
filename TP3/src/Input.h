@@ -25,7 +25,7 @@ int isChar(char string[]);
  * @param tam Tamaño maximo de caracteres permitidos
  * @return Devuelve -1 si hay un error (Input == NULL o Tamaño invalido), 0 si esta bien
  */
-int getString(char input[], int tam);
+int getString(char mensaje[],char input[], int tam);
 
 /**
  * @fn int SizeString(char[])
@@ -63,9 +63,10 @@ int isInt(char input[]);
  * @brief Se solicita que se escriba numeros en un string y los devuelve si se cumplen las condiciones
  *
  * @param input Puntero de la variable recibida por referencia
+ * @param mensaje Mensaje a mostrar al usuario
  * @return Devuelve -1 si no se escribieron solo numeros, 0 si esta bien
  */
-int getInt(int* input);
+int getInt(int* input,char mensaje[]);
 
 /**
  * @fn int utn_getInt(char[], char[], int, int, int, int*)
@@ -88,6 +89,7 @@ int utn_getInt(char mensaje[], char mensajeError[], int min, int max, int reinte
  * @param input Cadena recibida a validar
  * @return Devuelve -1 si hay una letra en el string, 0 si solo hay numeros
  */
+
 int isFloat(char input[]);
 
 /**
@@ -97,7 +99,7 @@ int isFloat(char input[]);
  * @param input Puntero de la variable recibida por referencia
  * @return Devuelve -1 si no se escribieron solo numeros, 0 si esta bien
  */
-int getFloat(float* input);
+int getFloat(char mensaje[],float* input);
 
 /**
  * @fn int utn_getFloat(char[], char[], float, float, int, float*)
