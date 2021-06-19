@@ -25,7 +25,7 @@
 int main()
 {
 	int salir = 0;
-	int idMaximo = 0;
+	int idMaximo = 1;
     LinkedList* listaEmpleados = ll_newLinkedList();
 
     setbuf(stdout,NULL);
@@ -106,7 +106,14 @@ int main()
             case 6:
             	if(ll_len(listaEmpleados) != 0)
             	{
-            		controller_ListEmployee(listaEmpleados);
+            		if(!controller_ListEmployee(listaEmpleados))
+            		{
+
+            		}
+            		else
+            		{
+            			printf("Se produjo un error al mostrar un empleado\n");
+            		}
             	}
             	else
 				{
@@ -116,8 +123,14 @@ int main()
             case 7:
             	if(ll_len(listaEmpleados) != 0)
             	{
-					controller_sortEmployee(listaEmpleados);
-					controller_ListEmployee(listaEmpleados);
+					if(!controller_sortEmployee(listaEmpleados))
+					{
+						printf("Se ordenaron los empleado con el critero especificado\n");
+					}
+					else
+					{
+						printf("Hubo un error,\n");
+					}
             	}
             	else
 				{
@@ -125,23 +138,41 @@ int main()
 				}
             	break;
             case 8:
-				if(!controller_saveAsText("data.csv",listaEmpleados))
+            	if(ll_len(listaEmpleados) != 0)
+            	{
+					if(!controller_saveAsText("data2.csv",listaEmpleados))	//Se crea un archivo auxiliar como "prueba" de que se pudene guardar los datos, asi se evita el posible caso de perdida de datos
+					{
+						controller_saveAsText("data.csv",listaEmpleados);
+						WriteMaxId("idMaximo.csv", &idMaximo);
+						printf("Se guardaron los datos de los empleados (modo texto)\n");
+					}
+					else
+					{
+						printf("Hubo un error al guardar los empleados\n");
+					}
+        		}
+            	else
 				{
-					printf("Se guardaron los datos de los empleados (modo texto)\n");
-				}
-				else
-				{
-					printf("Hubo un error al guardar los empleados\n");
+					printf("No hay elementos cargados para guardar.\n");
 				}
             	break;
             case 9:
-				if(!controller_saveAsBinary("data.bin",listaEmpleados))
-				{
-					printf("Se guardaron los datos de los empleados (modo binario)\n");
+            	if(ll_len(listaEmpleados) != 0)
+            	{
+					if(!controller_saveAsBinary("data2.bin",listaEmpleados))
+					{
+						controller_saveAsBinary("data.bin",listaEmpleados);
+						WriteMaxId("idMaximo.csv", &idMaximo);
+						printf("Se guardaron los datos de los empleados (modo binario)\n");
+					}
+					else
+					{
+						printf("Hubo un error al guardar los empleados\n");
+					}
 				}
 				else
 				{
-					printf("Hubo un error al guardar los empleados\n");
+					printf("No hay elementos cargados para guardar.\n");
 				}
             	break;
             case 10:
@@ -149,8 +180,6 @@ int main()
             	break;
         }
     }while(!salir);
-
-    WriteMaxId("idMaximo.csv", &idMaximo);
 
     ll_deleteLinkedList(listaEmpleados);
 

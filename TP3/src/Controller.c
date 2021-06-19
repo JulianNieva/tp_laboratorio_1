@@ -84,25 +84,32 @@ int controller_addEmployee(LinkedList* pArrayListEmployee, int* idMaximo)
 {
 	int retorno = -1;
 	Employee* aux;
+
+	int sueldo;
+	int horasTrabajadas;
 	char auxNombre[128];
-	char auxHoras[50];
-	char auxSueldo[50];
-	char idAux[20];
+
+	char horasStr[50];
+	char sueldoStr[50];
+	char idStr[20];
 
 	if(pArrayListEmployee != NULL && idMaximo != NULL)
 	{
-		itoa(*idMaximo,idAux,10);	//Convierto un entero (int) a cadena
-		utn_getString("Ingrese el nombre del empleado: ", "Error. Ingrese un nombre valido", 128, 6, auxNombre);
-		getString("Ingrese el horario de trabajo del empleado: ",auxHoras,50);
-		getString("Ingrese el sueldo del empleado: ",auxSueldo,50);
+		utn_getString("Ingrese el nombre del empleado: ", "Error. Ingrese un nombre valido ", 128, 6, auxNombre);
+		utn_getInt("Ingrese el horario laboral del empleado: ","Error. Ingrese un horario valido ", 50, 400, 6, &horasTrabajadas);
+		utn_getInt("Ingrese el sueldo del empleado: ", "Error. Ingrese un sueldo valido ", 10000, 500000, 6, &sueldo);
 
-		aux = employee_newParametros(idAux,auxNombre,auxHoras,auxSueldo);
+		itoa(horasTrabajadas,horasStr,10);
+		itoa(*idMaximo,idStr,10);
+		itoa(sueldo,sueldoStr,10);
+
+		aux = employee_newParametros(idStr,auxNombre,horasStr,sueldoStr);
 
 		if(aux != NULL)
 		{
-			*idMaximo = *idMaximo + 1;
 			if(!ll_add(pArrayListEmployee, aux))
 			{
+				*idMaximo = *idMaximo + 1;
 				retorno = 0;
 			}
 		}
@@ -124,6 +131,11 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 	int index;
 	int idAEliminar;
 	char respuesta[4];
+
+	int sueldoAux;
+	int horasAux;
+	char nombreAux[128];
+
 	Employee* aux;
 
 	if(pArrayListEmployee != NULL)
@@ -135,7 +147,7 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 		if(index != -1)
 		{
 			aux = (Employee*)ll_get(pArrayListEmployee, index);
-			utn_getString("Estas seguro que desea modificar este empleado?\n(Escriba SI para aceptar): ", "Error. Ingrese una respuesta valida", 4, 6, respuesta);
+			utn_getString("Estas seguro que desea modificar este empleado?\n(Escriba SI para aceptar): ", "Error. Ingrese una respuesta valida ", 4, 6, respuesta);
 
 			if(stricmp(respuesta,"si") == 0)
 			{
@@ -145,17 +157,20 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 					switch(SubMenuModificar())
 					{
 						case 1:
-							utn_getString("Ingrese el nuevo nombre del empleado: ", "Error. Ingrese un nombre valido", 128, 6, aux->nombre);
+							utn_getString("Ingrese el nuevo nombre del empleado: ", "Error. Ingrese un nombre valido ", 128, 6, nombreAux);
+							employee_setNombre(aux,nombreAux);
 							break;
 						case 2:
-							utn_getInt("Ingrese el nuevo horario laboral del empleado: ","Error. Ingrese un horario valido", 70, 350, 6, &aux->horasTrabajadas);
+							utn_getInt("Ingrese el nuevo horario laboral del empleado: ","Error. Ingrese un horario valido ", 70, 350, 6, &horasAux);
+							employee_setHorasTrabajadas(aux,horasAux);
 							break;
-						case 3:	//Utilizar gets
-							utn_getInt("Ingrese el nuevo sueldo del empleado", "Error. Ingrese un sueldo valido", 10000, 400000, 6, &aux->sueldo);
+						case 3:
+							utn_getInt("Ingrese el nuevo sueldo del empleado", "Error. Ingrese un sueldo valido ", 10000, 400000, 6, &sueldoAux);
+							employee_setSueldo(aux,sueldoAux);
 							break;
 					}
 
-					utn_getString("Desea seguir modificando?\n(Escriba SI para aceptar): ", "Error. Ingrese una respuesta valida", 4, 6, respuesta);
+					utn_getString("Desea seguir modificando?\n(Escriba SI para aceptar): ", "Error. Ingrese una respuesta valida ", 4, 6, respuesta);
 
 				}while(stricmp(respuesta, "si") == 0);
 			}
@@ -229,11 +244,7 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
 		{
 			aux = (Employee*)ll_get(pArrayListEmployee, i);
 
-			if(!employee_showOneEmployee(aux))
-			{
-				retorno = 0;
-			}
-			else
+			if(employee_showOneEmployee(aux)== -1)
 			{
 				retorno = -1;
 				break;
@@ -259,21 +270,35 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
 
 	if(pArrayListEmployee != NULL)
 	{
+		retorno = 0;
+
 		utn_getInt("Ingrese el orden deseado\n(1 para ascendente, 0 para descendente):  ", "Error. Ingrese un orden valido ", 0, 1, 6, &orden);
 
 		switch(SubMenuCriterioOrdenamiento())
 		{
 		case 1:
-			ll_sort(pArrayListEmployee,employee_compareByName, orden);
+			if(ll_sort(pArrayListEmployee,employee_compareByName, orden) == -1)
+			{
+				retorno = -1;
+			}
 			break;
 		case 2:
-			ll_sort(pArrayListEmployee,employee_compareByHours, orden);
+			if(ll_sort(pArrayListEmployee,employee_compareByHours, orden)== -1)
+			{
+				retorno = -1;
+			}
 			break;
 		case 3:
-			ll_sort(pArrayListEmployee,employee_compareBySalary, orden);
+			if(ll_sort(pArrayListEmployee,employee_compareBySalary, orden) == -1)
+			{
+				retorno = -1;
+			}
 			break;
 		case 4:
-			ll_sort(pArrayListEmployee,employee_compareById, orden);
+			if(ll_sort(pArrayListEmployee,employee_compareById, orden) == -1)
+			{
+				retorno = -1;
+			}
 			break;
 		}
 	}
@@ -349,7 +374,6 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 
 	if(path != NULL && pArrayListEmployee != NULL)
 	{
-
 		pFile = fopen(path, "wb");
 
 		if(pFile != NULL)

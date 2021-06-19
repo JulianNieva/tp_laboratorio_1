@@ -4,9 +4,6 @@
 #include "Employee.h"
 #include "parser.h"
 
-#define ERROR -1
-#define EXITO 0
-
 /** \brief Parsea los datos los datos de los empleados desde el archivo data.csv (modo texto).
  *
  * \param path char*
@@ -29,7 +26,6 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 
 		while(fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n",bufferId,bufferNombre,bufferHoras,bufferSueldo) == 4)
 		{
-			retorno = EXITO;
 			auxiliar = employee_newParametros(bufferId,bufferNombre,bufferHoras,bufferSueldo);
 
 			if(!ll_add(pArrayListEmployee, auxiliar))//Acordarse de validar si lo pudo agregar
@@ -58,7 +54,7 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 {
 	Employee auxiliar;
 
-	int retorno = ERROR;
+	int retorno = -1;
 
 	char bufferId[20];
 	char bufferHoras[20];
@@ -68,17 +64,15 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 	{
 		while(fread(&auxiliar,sizeof(Employee),1,pFile) == 1)
 		{
+			retorno = 0;
+
 			itoa(auxiliar.id,bufferId,10);
 			itoa(auxiliar.horasTrabajadas,bufferHoras,10);
 			itoa(auxiliar.sueldo,bufferSueldo,10);
 
 			Employee* aAgregar = employee_newParametros(bufferId,auxiliar.nombre,bufferHoras,bufferSueldo);
 
-			if(!ll_add(pArrayListEmployee, aAgregar)) //Acordarse de validar si lo pudo agregar
-			{
-				retorno = 0;
-			}
-			else
+			if(ll_add(pArrayListEmployee, aAgregar) == -1) //Valido si se pudo agregar el nuevo empleado a la lista
 			{
 				retorno = -1;
 				break;

@@ -12,8 +12,8 @@
 int MenuPrincipal(void)
 {
 	int option;
-	printf("1. Cargar los datos de los empleados desde el archivo data.csv (modo texto).\n");
-	printf("2. Cargar los datos de los empleados desde el archivo data.bin (modo binario).\n");
+	printf("1. Cargar los datos de los empleados desde el archivo data.csv (modo texto). Tenga en cuenta que al cargar el archivo se eliminara la lista actual\n");
+	printf("2. Cargar los datos de los empleados desde el archivo data.bin (modo binario). Tenga en cuenta que al cargar el archivo se se eliminara la lista actual\n");
 	printf("3. Alta de empleado\n");
 	printf("4. Modificar datos de empleado\n");
 	printf("5. Baja de empleado\n");

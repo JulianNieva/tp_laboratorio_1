@@ -29,16 +29,16 @@ Employee* employee_newParametros(char* idStr,char* nombreStr,char* horasTrabajad
 
 	this = employee_new();
 
-	//Setter general para validar parametros
-
-		//Valido de que las funciones me devuelvan todo ok
-	if(employee_setId(this,auxId) == -1 || employee_setNombre(this,nombreStr) == -1|| employee_setHorasTrabajadas(this,auxHoras) == -1 || employee_setSueldo(this,auxSueldo) == -1)
+	if(this != NULL)
 	{
-		employee_delete(this);	//Si entro al if, llamo a la funcion para borrar al empleado
-		this = NULL;	//Devuelvo NULL
+		if(employee_setId(this,auxId) == -1 || employee_setNombre(this,nombreStr) == -1|| employee_setHorasTrabajadas(this,auxHoras) == -1 || employee_setSueldo(this,auxSueldo) == -1)
+		{
+			employee_delete(this);	//Si entro al if, llamo a la funcion para borrar al empleado
+			this = NULL;	//Devuelvo NULL
+		}
 	}
 
-	return this;	//Si entro al if, devuelvo el empleado
+	return this;
 }
 
 void employee_delete(Employee* this)	//Destructor
@@ -129,8 +129,8 @@ int employee_setSueldo(Employee* this,int sueldo)
 
 	if(this != NULL)
 	{
-			retorno = 0;
-			this->sueldo = sueldo;
+		retorno = 0;
+		this->sueldo = sueldo;
 	}
 
 	return retorno;
@@ -152,6 +152,7 @@ int employee_getSueldo(Employee* this,int* sueldo)
 int employee_showOneEmployee(Employee* empleados)
 {
 	int retorno = -1;
+
 	int auxId;
 	char auxNombre[128];
 	int auxHoras;
