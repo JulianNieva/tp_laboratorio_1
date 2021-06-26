@@ -253,7 +253,6 @@ int ll_remove(LinkedList* this,int index)
     int lenght;
     Node* aEliminarNode = NULL;
     Node* nodoAnterior = NULL;
-    void* pElementAux;
 
     lenght = ll_len(this);
 
@@ -273,9 +272,6 @@ int ll_remove(LinkedList* this,int index)
 			nodoAnterior->pNextNode = aEliminarNode->pNextNode;
 			free(aEliminarNode);
     	}
-
-    	pElementAux = ll_get(this,index);
-		free(pElementAux);
 
 		returnAux = 0;
 		this->size -= 1;
