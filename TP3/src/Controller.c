@@ -95,6 +95,8 @@ int controller_addEmployee(LinkedList* pArrayListEmployee, int* idMaximo)
 
 	if(pArrayListEmployee != NULL && idMaximo != NULL)
 	{
+		ReadMaxId("idMaximo.csv",idMaximo);
+
 		utn_getString("Ingrese el nombre del empleado: ", "Error. Ingrese un nombre valido ", 128, 6, auxNombre);
 		utn_getInt("Ingrese el horario laboral del empleado: ","Error. Ingrese un horario valido ", 50, 400, 6, &horasTrabajadas);
 		utn_getInt("Ingrese el sueldo del empleado: ", "Error. Ingrese un sueldo valido ", 10000, 500000, 6, &sueldo);
@@ -109,6 +111,7 @@ int controller_addEmployee(LinkedList* pArrayListEmployee, int* idMaximo)
 		{
 			if(!ll_add(pArrayListEmployee, aux))
 			{
+				*idMaximo = GetMaxId(pArrayListEmployee);
 				*idMaximo = *idMaximo + 1;
 				retorno = 0;
 			}
@@ -129,7 +132,7 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 {
 	int retorno = -1;
 	int index;
-	int idAEliminar;
+	int idAModificar;
 	char respuesta[4];
 
 	int sueldoAux;
@@ -140,9 +143,9 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 
 	if(pArrayListEmployee != NULL)
 	{
-		getInt(&idAEliminar,"Ingrese el ID del empleado que desea modificar: ");
+		utn_getInt("Ingrese el ID del empleado que desea dar de baja: ","Error. Ingrese un ID valido ", 1, 10000, 6, &idAModificar);
 
-		index = FindEmployeeById(pArrayListEmployee,idAEliminar);
+		index = FindEmployeeById(pArrayListEmployee,idAModificar);
 
 		if(index != -1)
 		{
@@ -196,7 +199,7 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
 
 	if(pArrayListEmployee != NULL)
 	{
-		getInt(&idAEliminar,"Ingrese el ID del empleado que desea eliminar: ");
+		utn_getInt("Ingrese el ID del empleado que desea dar de baja: ","Error. Ingrese un ID valido ", 1, 10000, 6, &idAEliminar);
 
 		index = FindEmployeeById(pArrayListEmployee,idAEliminar);
 
@@ -236,7 +239,7 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
 
 		lenght = ll_len(pArrayListEmployee);
 
-	    printf("|         |                 	|                 	   |            |\n");
+		printf(" _______________________________________________________________________\n");
 	    printf("|  ID  	  | Nombre       	|  Horas Trabajadas    	   |   Sueldo   |\n");
 	    printf("|_________|_____________________|__________________________|____________|\n");
 
@@ -402,7 +405,7 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
     return retorno;
 }
 
-void InitalizeMaxId(char* path, int* idMaximo)
+void ReadMaxId(char* path, int* idMaximo)
 {
 	FILE* pArchivoId;
 
@@ -455,4 +458,34 @@ int FindEmployeeById(LinkedList* pArrayListEmployee, int idAEliminar)
 	}
 
 	return index;
+}
+
+int GetMaxId(LinkedList* pArrayListEmployee)
+{
+	int IdMayor;
+	int id;
+	int len;
+	int i;
+	Employee* aux;
+
+	if(pArrayListEmployee!=NULL)
+	{
+		len = ll_len(pArrayListEmployee);
+
+		if(len>0)
+		{
+			for(i=0;i<len;i++)
+			{
+				aux = (Employee*)ll_get(pArrayListEmployee,i);
+				employee_getId(aux,&id);
+
+				if(i == 0 || (IdMayor<id))
+				{
+					IdMayor=id;
+				}
+			}
+		}
+	}
+
+	return IdMayor;
 }

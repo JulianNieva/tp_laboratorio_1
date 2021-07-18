@@ -52,32 +52,29 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
  */
 int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 {
-	Employee auxiliar;
-
+	Employee* aux = NULL;
 	int retorno = -1;
-
-	char bufferId[20];
-	char bufferHoras[20];
-	char bufferSueldo[20];
 
 	if(pFile != NULL && pArrayListEmployee != NULL)
 	{
-		while(fread(&auxiliar,sizeof(Employee),1,pFile) == 1)
+		do
 		{
-			retorno = 0;
+			aux = employee_new();	//Creo en memoria un empleado
 
-			itoa(auxiliar.id,bufferId,10);
-			itoa(auxiliar.horasTrabajadas,bufferHoras,10);
-			itoa(auxiliar.sueldo,bufferSueldo,10);
-
-			Employee* aAgregar = employee_newParametros(bufferId,auxiliar.nombre,bufferHoras,bufferSueldo);
-
-			if(ll_add(pArrayListEmployee, aAgregar) == -1) //Valido si se pudo agregar el nuevo empleado a la lista
+			if(aux != NULL)	//Me aseguro de que distinto de NULL
 			{
-				retorno = -1;
-				break;
+				if(fread(aux,sizeof(Employee),1,pFile))	//Si pudo leer al empleado correctamente entra el if
+				{
+					ll_add(pArrayListEmployee,aux);	//Agrego el empleado leido a la lista
+					retorno = 0;
+				}
+				else	//Si no, borro de memoria al empleado
+				{
+					employee_delete(aux);
+				}
 			}
-		}
+
+		}while(!feof(pFile));
 	}
 
     return retorno;

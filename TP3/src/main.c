@@ -7,6 +7,9 @@
 #include "Menu.h"
 #include "Input.h"
 
+#define SE_REALIZO 1
+#define NO_SE_REALIZO 0
+
 /****************************************************
     Menu:
      1. Cargar los datos de los empleados desde el archivo data.csv (modo texto).
@@ -25,42 +28,77 @@
 int main()
 {
 	int salir = 0;
-	int idMaximo = 1;
+	int idMaximo = 1001;
+	int opcionCarga;
+	int flagCargaTexto = NO_SE_REALIZO;
+	int flagCargaBinario = NO_SE_REALIZO;
     LinkedList* listaEmpleados = ll_newLinkedList();
 
     setbuf(stdout,NULL);
-
-    InitalizeMaxId("idMaximo.csv", &idMaximo);
 
     do{
         switch(MenuPrincipal())
         {
             case 1:
-            	ll_clear(listaEmpleados);
-				if(!controller_loadFromText("data.csv",listaEmpleados))
-				{
-					printf("Se cargaron los datos del texto con exito!\n");
-				}
-				else
-				{
-					printf("Hubo un error al cargar el archivo...\n");
-				}
+            	if(ll_isEmpty(listaEmpleados) || (flagCargaTexto == NO_SE_REALIZO && flagCargaBinario == NO_SE_REALIZO))
+            	{
+            		utn_getInt("Cual archivo desea cargar?\n1. Archivo Original\n2. Archivo Guardado\nElija una opcion: ", "Error. Ingrese una opcion valida ", 1, 2, 6, &opcionCarga);
+            		if(opcionCarga == 1)
+            		{
+            			if(!controller_loadFromText("data.csv",listaEmpleados))
+            			{
+            				flagCargaTexto = SE_REALIZO;
+            				printf("Se cargo el archivo con exito!\n");
+            			}
+            			else
+            			{
+            				printf("Se produjo un error en la carga del archivo\n");
+            			}
+            		}
+            		else
+            		{
+            			if(opcionCarga == 2)
+            			{
+							if(!controller_loadFromText("data2.csv",listaEmpleados))
+							{
+								printf("Se cargo el archivo con exito!\n");
+								flagCargaTexto = SE_REALIZO;
+							}
+							else
+							{
+								printf("Se produjo un error en la carga del archivo\n");
+							}
+            			}
+            		}
+            	}
+            	else
+            	{
+            		printf("No puede cargar un archivo dos veces\n");
+            	}
                 break;
             case 2:
-            	ll_clear(listaEmpleados);
-				if(!controller_loadFromBinary("data.bin",listaEmpleados))
+            	if(ll_isEmpty(listaEmpleados) || (flagCargaTexto == NO_SE_REALIZO && flagCargaBinario == NO_SE_REALIZO))
 				{
-					printf("Se cargaron los datos del archivo binario con exito!\n");
+            		if(!controller_loadFromBinary("data.bin", listaEmpleados))
+            		{
+            			flagCargaBinario = SE_REALIZO;
+        				printf("Se cargo el archivo con exito!\n");
+        			}
+        			else
+        			{
+        				printf("Se produjo un error en la carga del archivo\n");
+        			}
 				}
-				else
-				{
-					printf("Hubo un error al cargar el archivo...\n");
-				}
+            	else
+            	{
+            		printf("No puede cargar un archivo dos veces\n");
+            	}
             	break;
             case 3:
 				if(!controller_addEmployee(listaEmpleados, &idMaximo))
 				{
 					printf("Se dio de alta al empleado con exito!\n");
+					WriteMaxId("idMaximo.csv",&idMaximo);
 				}
 				else
 				{
@@ -138,12 +176,10 @@ int main()
 				}
             	break;
             case 8:
-            	if(ll_len(listaEmpleados) != 0)
+            	if(ll_isEmpty(listaEmpleados) == 0)
             	{
-					if(!controller_saveAsText("data2.csv",listaEmpleados))	//Se crea un archivo auxiliar como "prueba" de que se pudene guardar los datos, asi se evita el posible caso de perdida de datos
+					if(!controller_saveAsText("data2.csv",listaEmpleados))
 					{
-						controller_saveAsText("data.csv",listaEmpleados);
-						WriteMaxId("idMaximo.csv", &idMaximo);
 						printf("Se guardaron los datos de los empleados (modo texto)\n");
 					}
 					else
@@ -157,12 +193,10 @@ int main()
 				}
             	break;
             case 9:
-            	if(ll_len(listaEmpleados) != 0)
+            	if(ll_isEmpty(listaEmpleados) == 0)
             	{
-					if(!controller_saveAsBinary("data2.bin",listaEmpleados))
+					if(!controller_saveAsBinary("data.bin",listaEmpleados))
 					{
-						controller_saveAsBinary("data.bin",listaEmpleados);
-						WriteMaxId("idMaximo.csv", &idMaximo);
 						printf("Se guardaron los datos de los empleados (modo binario)\n");
 					}
 					else

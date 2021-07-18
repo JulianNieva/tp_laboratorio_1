@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef __LINKEDLIST
-#define __LINKEDLIST
+#ifndef LINKEDLIST_H_
+#define LINKEDLIST_H_
 struct Node
 {
     void* pElement;
@@ -52,3 +52,4 @@ int ll_containsAll(LinkedList* this,LinkedList* this2);
 LinkedList* ll_subList(LinkedList* this,int from,int to);
 LinkedList* ll_clone(LinkedList* this);
 int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order);
+int ll_count(LinkedList* this,int(*fn)(void* element));

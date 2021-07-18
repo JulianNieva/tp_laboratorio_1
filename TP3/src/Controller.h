@@ -8,5 +8,6 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee);
 int controller_saveAsText(char* path , LinkedList* pArrayListEmployee);
 int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee);
 void WriteMaxId(char* path, int*);
-void InitalizeMaxId(char* path, int*);
+void ReadMaxId(char* path, int*);
 int FindEmployeeById(LinkedList* pArrayListEmployee, int id);
+int GetMaxId(LinkedList* pArrayListEmployee);
