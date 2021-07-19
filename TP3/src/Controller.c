@@ -402,6 +402,13 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
     return retorno;
 }
 
+/**
+ * @fn void ReadMaxId(char*, int*)
+ * @brief Leo el proximo ID que se le asignara a un empleado
+ *
+ * @param path Nombre del archivo
+ * @param idMaximo Puntero al idMaximo
+ */
 void ReadMaxId(char* path, int* idMaximo)
 {
 	FILE* pArchivoId;
@@ -416,6 +423,13 @@ void ReadMaxId(char* path, int* idMaximo)
     fclose(pArchivoId);
 }
 
+/**
+ * @fn void WriteMaxId(char*, int*)
+ * @brief Escribo el nuevo ID maximo en el archivo
+ *
+ * @param path Nombre del archivo
+ * @param idMaximo Puntero al idMaximo
+ */
 void WriteMaxId(char* path, int* idMaximo)
 {
     FILE* pArchivoId;
@@ -430,7 +444,15 @@ void WriteMaxId(char* path, int* idMaximo)
     fclose(pArchivoId);
 }
 
-int FindEmployeeById(LinkedList* pArrayListEmployee, int idAEliminar)
+/**
+ * @fn int FindEmployeeById(LinkedList*, int)
+ * @brief Busco un empleado por ID y devuelvo su posicion
+ *
+ * @param pArrayListEmployee Puntero a la lista de empleados
+ * @param idABuscar ID a buscar
+ * @return Devuelvo -1 si no se encontro al empleado, sino la posicion del empleado encontrado
+ */
+int FindEmployeeById(LinkedList* pArrayListEmployee, int idABuscar)
 {
 	int index = -1;
 	int idAux;
@@ -446,7 +468,7 @@ int FindEmployeeById(LinkedList* pArrayListEmployee, int idAEliminar)
 			aux = (Employee*)ll_get(pArrayListEmployee, i);
 
 			employee_getId(aux,&idAux);
-			if(idAux == idAEliminar)
+			if(idAux == idABuscar)
 			{
 				index = i;
 				break;
@@ -457,6 +479,13 @@ int FindEmployeeById(LinkedList* pArrayListEmployee, int idAEliminar)
 	return index;
 }
 
+/**
+ * @fn int GetMaxId(LinkedList*)
+ * @brief Obtengo el ID maximo y lo retorno
+ *
+ * @param pArrayListEmployee Puntero a la lista de empleados
+ * @return Devuelvo el ID mayor
+ */
 int GetMaxId(LinkedList* pArrayListEmployee)
 {
 	int IdMayor;
