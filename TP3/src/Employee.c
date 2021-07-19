@@ -4,9 +4,6 @@
 #include "Employee.h"
 #include "Input.h"
 
-#define ERROR -1
-#define EXITO 0
-
 Employee* employee_new(void)	//Constructor
 {
 	Employee* aux;

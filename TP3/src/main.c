@@ -57,18 +57,15 @@ int main()
             		}
             		else
             		{
-            			if(opcionCarga == 2)
-            			{
-							if(!controller_loadFromText("data2.csv",listaEmpleados))
-							{
-								printf("Se cargo el archivo con exito!\n");
-								flagCargaTexto = SE_REALIZO;
-							}
-							else
-							{
-								printf("Se produjo un error en la carga del archivo\n");
-							}
-            			}
+						if(!controller_loadFromText("data2.csv",listaEmpleados))
+						{
+							printf("Se cargo el archivo con exito!\n");
+							flagCargaTexto = SE_REALIZO;
+						}
+						else
+						{
+							printf("Se produjo un error en la carga del archivo\n");
+						}
             		}
             	}
             	else
@@ -144,11 +141,7 @@ int main()
             case 6:
             	if(ll_len(listaEmpleados) != 0)
             	{
-            		if(!controller_ListEmployee(listaEmpleados))
-            		{
-
-            		}
-            		else
+            		if(controller_ListEmployee(listaEmpleados) == -1)
             		{
             			printf("Se produjo un error al mostrar un empleado\n");
             		}

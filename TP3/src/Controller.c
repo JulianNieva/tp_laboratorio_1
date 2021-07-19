@@ -8,9 +8,6 @@
 #include "Menu.h"
 #include "Controller.h"
 
-#define ERROR -1
-#define EXITO 0
-
 /** \brief Carga los datos de los empleados desde el archivo data.csv (modo texto).
  *
  * \param path char*
@@ -235,7 +232,7 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
 
 	if(pArrayListEmployee != NULL)
 	{
-		retorno = EXITO;
+		retorno = 0;
 
 		lenght = ll_len(pArrayListEmployee);
 
@@ -247,7 +244,7 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
 		{
 			aux = (Employee*)ll_get(pArrayListEmployee, i);
 
-			if(employee_showOneEmployee(aux)== -1)
+			if(employee_showOneEmployee(aux) == -1)
 			{
 				retorno = -1;
 				break;
